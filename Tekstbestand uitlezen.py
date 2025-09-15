@@ -6,5 +6,5 @@ if '.' in text:
     position = text.find('.')
     sentence = ""
     print(position)
-    print(text[0:position]+1)
+    print(text[0:position+1])
 print()
