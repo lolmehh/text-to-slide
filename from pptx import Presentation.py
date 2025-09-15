@@ -1,4 +1,5 @@
 from pptx import Presentation
+import os
 
 # Maak een nieuwe presentatie
 prs = Presentation()
@@ -23,4 +24,9 @@ title2.text = "Tweede slide"
 content.text = "Eerste punnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnpunnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnntpunnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnntnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnt\nTweede punt\nDerde punt"
 
 # Opslaan als pptx bestand
-prs.save("voorbeeld.pptx")
+# Pad naar Downloads opvragen
+downloads = os.path.join(os.path.expanduser("~"), "Downloads")
+bestand = os.path.join(downloads, "voorbeeld.pptx")
+
+
+prs.save(bestand)
