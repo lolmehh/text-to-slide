@@ -3,5 +3,6 @@ text = f.read()
 print()
 print(text)
 if '.' in text:
-    print(position = text.find('.') )
+    position = text.find('.')
+    print(position)
 print()
