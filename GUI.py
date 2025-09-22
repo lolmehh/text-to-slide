@@ -55,7 +55,8 @@ while is_running:
 
                 if bestand:
                     print("Je hebt gekozen:", bestand)
-                    import Tekstbestand uitlezen,py
+                    from uitlezen import importtekst
+                    print(importtekst)
                 else:
                     print("Geen bestand gekozen")
 
