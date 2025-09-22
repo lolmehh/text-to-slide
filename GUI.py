@@ -58,13 +58,19 @@ while is_running:
                 if bestand:
                     print("Je hebt gekozen:", bestand)
                     importtekst = uitlezen(bestand)
-                    print(importtekst)
+                    print("bob", importtekst)
+
+                    with open(bestand, "r", encoding="utf-8") as f:
+                        text = f.read()
+                        print("Dit is de teksts", text)
+                    
+                    
+                    
                 else:
                     print("Geen bestand gekozen")
 
 
                 # Tekst uit het tekstvak ophalen en printen
-                print("Tekstbox inhoud:", tekstbox.get_text())
                 print("De tekst wordt nu omgezet naar een powerpointpresentatie")
 
         manager.process_events(event)
