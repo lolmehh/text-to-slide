@@ -20,11 +20,10 @@ slide2 = prs.slides.add_slide(slide_layout2)
 title2 = slide2.shapes.title
 content = slide2.placeholders[1]
 
-title2.text = "Tweede slide"
-content.text = "Eerste punnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnpunnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnntpunnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnntnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnt\nTweede punt\nDerde punt"
+title2.text = "een slide"
+content.text = "Eerste punt om over te hebben \nTweede punt\nDerde punt"
 
-# Opslaan als pptx bestand
-# Pad naar Downloads opvragen
+
 downloads = os.path.join(os.path.expanduser("~"), "Downloads")
 bestand = os.path.join(downloads, "voorbeeld.pptx")
 

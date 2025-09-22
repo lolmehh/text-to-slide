@@ -1,4 +1,4 @@
-f = open("README.md", "r")
+f = open("uitleesbestand.txt", "r")
 text = f.read()
 print()
 print(text)
