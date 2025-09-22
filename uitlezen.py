@@ -1,5 +1,3 @@
-from GUI import bestand
-
 def uitlezen(
     bestand    
 ):
@@ -12,4 +10,5 @@ def uitlezen(
         sentence = ""
         print(position)
         importtekst = text[0:position+1]
+        return importtekst
     print()
