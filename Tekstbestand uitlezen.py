@@ -1,4 +1,6 @@
-f = open("uitleesbestand.txt", "r")
+from GUI.py import bestand
+
+f = open(bestand, "r")
 text = f.read()
 print()
 print(text)

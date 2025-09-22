@@ -43,6 +43,23 @@ while is_running:
         if event.type == pygame_gui.UI_BUTTON_PRESSED:
 
             if event.ui_element == uitzetknop   :
+                import tkinter as tk
+                from tkinter import filedialog
+
+                root = tk.Tk()
+                root.withdraw()  
+                bestand = filedialog.askopenfilename(
+                    title="Kies een profielfoto",
+                    filetypes=[("*.txt")]
+                )
+
+                if bestand:
+                    print("Je hebt gekozen:", bestand)
+                    
+                else:
+                    print("Geen bestand gekozen")
+
+
                 # Tekst uit het tekstvak ophalen en printen
                 print("Tekstbox inhoud:", tekstbox.get_text())
                 print("De tekst wordt nu omgezet naar een powerpointpresentatie")
