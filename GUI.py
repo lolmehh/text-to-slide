@@ -49,13 +49,13 @@ while is_running:
                 root = tk.Tk()
                 root.withdraw()  
                 bestand = filedialog.askopenfilename(
-                    title="Kies een profielfoto",
-                    filetypes=[("*.txt")]
+                    title="Kies een tekstbestand",
+                    filetypes=[("*afbeelding", "*.txt")]
                 )
 
                 if bestand:
                     print("Je hebt gekozen:", bestand)
-                    
+                    import Tekstbestand uitlezen,py
                 else:
                     print("Geen bestand gekozen")
 
