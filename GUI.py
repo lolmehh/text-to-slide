@@ -2,7 +2,7 @@ import pygame
 import pygame_gui
 import tkinter as tk
 from tkinter import filedialog
-from uitlezen import bestandlezen
+#from uitlezen import bestandlezen
 
 
 pygame.init()
@@ -54,10 +54,29 @@ while is_running:
                 root.withdraw()  
                 bestand = filedialog.askopenfilename(
                     title="Kies een tekstbestand",
-                    filetypes=[("*afbeelding", "*.txt")]
+                    filetypes=[("*Tekstbestand", "*.txt")]
                 )
 
                 if bestand:
+                    def bestandlezen(bestand):
+                        # Open and read the file
+                        with open(bestand, "r") as f:
+                            text = f.read()
+
+                        # Print the full text (optional)
+                        print("\nFull text:")
+                        print(text)
+                        print()
+
+                        # Split the text into sentences using '.'
+                        sentences = text.split('.')
+
+                        # Go through each sentence and print it separately
+                        for sentence in sentences:
+                            sentence = sentence.strip()  # remove spaces/newlines
+                            if sentence:  # skip empty strings
+                                print(sentence + ".")
+
                     bestandlezen(bestand)
                     
                     print("Je hebt gekozen:", bestand)
