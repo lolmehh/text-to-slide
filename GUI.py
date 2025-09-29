@@ -63,7 +63,7 @@ while is_running:
                     print("Je hebt gekozen:", bestand)
                     importtekst = bestandlezen(bestand)
 
-                    print("bob", importtekst)
+                    print(importtekst)
 
                     with open(bestand, "r", encoding="utf-8") as f:
                         text = f.read()
@@ -73,10 +73,6 @@ while is_running:
                     
                 else:
                     print("Geen bestand gekozen")
-
-
-                # Tekst uit het tekstvak ophalen en printen
-                print("De tekst wordt nu omgezet naar een powerpointpresentatie")
 
         manager.process_events(event)
 

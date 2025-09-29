@@ -2,7 +2,7 @@
 def bestandlezen(bestand):
     # Open and read the file
     with open(bestand, "r") as f:
-        text = f.read()
+        text = f.read(bestand)
 
     # Print the full text (optional)
     print("\nFull text:")
