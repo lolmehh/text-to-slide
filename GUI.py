@@ -19,21 +19,22 @@ manager = pygame_gui.UIManager((800, 600))
 
 uitzetknop = pygame_gui.elements.UIButton(
     relative_rect=pygame.Rect((0, 425), (500, 75)),
-    text='Zet tekst om naar powerpoint presentatie.',
+    text='Import tekstbestand.',
+    
+    manager=manager
+)
+
+titelvak = pygame_gui.elements.UILabel(
+    relative_rect=pygame.Rect((0, 100), (500, 75)),
+    text='Text to slide',
     manager=manager
 )
 
 # Kleur voor uitzetknop
-uitzetknop.colours['normal_bg'] = pygame.Color("#388328")
-uitzetknop.colours['hovered_bg'] = pygame.Color("#46a442")
-uitzetknop.colours['active_bg'] = pygame.Color("#2e7d32")
+uitzetknop.colours['normal_bg'] = pygame.Color("#000000")
+uitzetknop.colours['hovered_bg'] = pygame.Color("#232323")
+uitzetknop.colours['active_bg'] = pygame.Color("#000000")
 uitzetknop.rebuild()
-
-tekstbox = pygame_gui.elements.UITextEntryLine(
-    relative_rect=pygame.Rect((0, 0), (500, 425)),
-    manager=manager
-)
-
 
 clock = pygame.time.Clock()
 is_running = True
@@ -53,7 +54,7 @@ while is_running:
                 root = tk.Tk()
                 root.withdraw()  
                 bestand = filedialog.askopenfilename(
-                    title="Kies een tekstbestand",
+                    title="Voeg tekstbestand toe:",
                     filetypes=[("*Tekstbestand", "*.txt")]
                 )
 
