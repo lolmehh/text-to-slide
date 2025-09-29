@@ -59,37 +59,24 @@ while is_running:
 
                 if bestand:
                     def bestandlezen(bestand):
-                        # Open and read the file
+
                         with open(bestand, "r") as f:
                             text = f.read()
 
-                        # Print the full text (optional)
-                        print("\nFull text:")
-                        print(text)
-                        print()
+                        # verdeel de tekst in zinnen door middel van '.'
+                        allezinnen = text.split('.')
 
-                        # Split the text into sentences using '.'
-                        sentences = text.split('.')
-
-                        # Go through each sentence and print it separately
-                        for sentence in sentences:
-                            sentence = sentence.strip()  # remove spaces/newlines
-                            if sentence:  # skip empty strings
-                                print(sentence + ".")
+                        # het verdelen
+                        for zin in allezinnen:
+                            zin = zin.strip()
+                            if zin: 
+                                print(zin + ".")
 
                     bestandlezen(bestand)
                     
                     print("Je hebt gekozen:", bestand)
-                    importtekst = bestandlezen(bestand)
+                    importtekst = bestandlezen(bestand)       
 
-                    print(importtekst)
-
-                    with open(bestand, "r", encoding="utf-8") as f:
-                        text = f.read()
-                        print("Dit is de teksts", text)
-                    
-                    
-                    
                 else:
                     print("Geen bestand gekozen")
 
