@@ -1,7 +1,7 @@
 import pygame
 import pygame_gui
 
-from uitlezen import uitlezen   # importeer de functie van gui.py
+
 
 pygame.init()
 
@@ -56,8 +56,10 @@ while is_running:
                 )
 
                 if bestand:
+                    from uitlezen import uitlezen   # importeer de functie van gui.py
                     print("Je hebt gekozen:", bestand)
                     importtekst = uitlezen(bestand)
+
                     print("bob", importtekst)
 
                     with open(bestand, "r", encoding="utf-8") as f:
