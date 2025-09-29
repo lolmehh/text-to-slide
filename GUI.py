@@ -1,6 +1,8 @@
 import pygame
 import pygame_gui
-
+import tkinter as tk
+from tkinter import filedialog
+from uitlezen import bestandlezen
 
 
 pygame.init()
@@ -56,9 +58,10 @@ while is_running:
                 )
 
                 if bestand:
-                    from uitlezen import uitlezen   # importeer de functie van gui.py
+                    bestandlezen(bestand)
+                    
                     print("Je hebt gekozen:", bestand)
-                    importtekst = uitlezen(bestand)
+                    importtekst = bestandlezen(bestand)
 
                     print("bob", importtekst)
 
