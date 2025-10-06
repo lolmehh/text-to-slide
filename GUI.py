@@ -2,6 +2,8 @@ import pygame
 import pygame_gui
 import tkinter as tk
 from tkinter import filedialog
+#from uitlezen import bestandlezen
+
 
 pygame.init()
 
@@ -18,6 +20,18 @@ manager = pygame_gui.UIManager((800, 600), 'theme.json')
 uitzetknop = pygame_gui.elements.UIButton(
     relative_rect=pygame.Rect((0, 425), (500, 75)),
     text='Import tekstbestand.',
+    manager=manager
+)
+
+textbox = pygame_gui.elements.UITextBox(
+    relative_rect=pygame.Rect((0, 75), (500, 350)),
+    html_text='upload een text bestand om te veranderen in een presentatie',
+    manager=manager
+)
+
+titlebox = pygame_gui.elements.UITextBox(
+    relative_rect=pygame.Rect((0, 0), (500, 75)),
+    html_text='text to slide',
     manager=manager
 )
 
@@ -49,7 +63,7 @@ while is_running:
                 from tkinter import filedialog
 
                 root = tk.Tk()
-                root.withdraw()     
+                root.withdraw()  
                 bestand = filedialog.askopenfilename(
                     title="Voeg tekstbestand toe:",
                     filetypes=[("*Tekstbestand", "*.txt")]
@@ -57,11 +71,14 @@ while is_running:
 
                 if bestand:
                     def bestandlezen(bestand):
+
                         with open(bestand, "r") as f:
                             text = f.read()
 
+                        # verdeel de tekst in zinnen door middel van '.'
                         allezinnen = text.split('.')
 
+                        # het verdelen
                         for zin in allezinnen:
                             zin = zin.strip()
                             if zin: 
@@ -70,12 +87,12 @@ while is_running:
                         for zin in allezinnen:
                             zin = zin.strip()
                             if zin.startswith("@"):
-                                print(zin, "Dit is de titel")
+                                print(zin + " Dit is titel")
 
-
-                    bestandlezen(bestand)
+                    ##bestandlezen(bestand)
                     
                     print("Je hebt gekozen:", bestand)
+                    importtekst = bestandlezen(bestand)       
 
                 else:
                     print("Geen bestand gekozen")
