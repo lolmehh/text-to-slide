@@ -13,14 +13,25 @@ window_surface = pygame.display.set_mode((500, 500))
 background = pygame.Surface((800, 600))
 background.fill(pygame.Color("#FFFFFF"))
 
-manager = pygame_gui.UIManager((800, 600))
+manager = pygame_gui.UIManager((800, 600), 'theme.json')
 
 # Bestaande knoppen
 
 uitzetknop = pygame_gui.elements.UIButton(
     relative_rect=pygame.Rect((0, 425), (500, 75)),
     text='Import tekstbestand.',
-    
+    manager=manager
+)
+
+textbox = pygame_gui.elements.UITextBox(
+    relative_rect=pygame.Rect((0, 75), (500, 350)),
+    html_text='upload een text bestand om te veranderen in een presentatie',
+    manager=manager
+)
+
+titlebox = pygame_gui.elements.UITextBox(
+    relative_rect=pygame.Rect((0, 0), (500, 75)),
+    html_text='text to slide',
     manager=manager
 )
 
