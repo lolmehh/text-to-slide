@@ -68,8 +68,8 @@ while is_running:
                                 print(zin + ".")
 
                         for zin in allezinnen:
-                            zin = zin.strip
-                            if zin and zin[0] == "@":
+                            zin = zin.strip()
+                            if zin.startswith("@"):
                                 print(zin, "Dit is de titel")
 
 

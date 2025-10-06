@@ -11,8 +11,8 @@ slide = prs.slides.add_slide(slide_layout)
 title = slide.shapes.title
 subtitle = slide.placeholders[1]
 
-title.text = "Titel  slide 1"
-subtitle.text = "Ik maak graag bananen."
+title.text = "Banaan"
+subtitle.text = "Ik maak graag bananen en aardbeien en sprint review."
 
 slide_layout2 = prs.slide_layouts[1]  # Titel + inhoud
 slide2 = prs.slides.add_slide(slide_layout2)
