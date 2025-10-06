@@ -1,14 +1,14 @@
 {
     "button": {
         "font": {
-            "name": "fira_code",
+            "name": "Times New Roman Bold",
             "size": 20
         }
     },
     "label": {
         "font": {
-            "name": "fira_code",
-            "size": 32
+            "name": "Times New Roman Bold",
+            "size": 100
         }
     }
 }
