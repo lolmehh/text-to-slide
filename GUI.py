@@ -35,12 +35,6 @@ titlebox = pygame_gui.elements.UITextBox(
     manager=manager
 )
 
-titelvak = pygame_gui.elements.UILabel(
-    relative_rect=pygame.Rect((0, 100), (500, 75)),
-    text='Text to slide',
-    manager=manager
-)
-
 # Kleur voor uitzetknop
 uitzetknop.colours['normal_bg'] = pygame.Color("#000000")
 uitzetknop.colours['hovered_bg'] = pygame.Color("#232323")
