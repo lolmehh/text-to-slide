@@ -73,7 +73,7 @@ while is_running:
                             if zin: 
                                 print(zin + ".")
 
-                    #bestandlezen(bestand)
+                    ##bestandlezen(bestand)
                     
                     print("Je hebt gekozen:", bestand)
                     importtekst = bestandlezen(bestand)       
