@@ -2,8 +2,6 @@ import pygame
 import pygame_gui
 import tkinter as tk
 from tkinter import filedialog
-#from uitlezen import bestandlezen
-
 
 pygame.init()
 
@@ -13,14 +11,13 @@ window_surface = pygame.display.set_mode((500, 500))
 background = pygame.Surface((800, 600))
 background.fill(pygame.Color("#FFFFFF"))
 
-manager = pygame_gui.UIManager((800, 600))
+manager = pygame_gui.UIManager((800, 600), 'theme.json')
 
 # Bestaande knoppen
 
 uitzetknop = pygame_gui.elements.UIButton(
     relative_rect=pygame.Rect((0, 425), (500, 75)),
     text='Import tekstbestand.',
-    
     manager=manager
 )
 
@@ -52,7 +49,7 @@ while is_running:
                 from tkinter import filedialog
 
                 root = tk.Tk()
-                root.withdraw()  
+                root.withdraw()     
                 bestand = filedialog.askopenfilename(
                     title="Voeg tekstbestand toe:",
                     filetypes=[("*Tekstbestand", "*.txt")]
@@ -60,23 +57,19 @@ while is_running:
 
                 if bestand:
                     def bestandlezen(bestand):
-
                         with open(bestand, "r") as f:
                             text = f.read()
 
-                        # verdeel de tekst in zinnen door middel van '.'
                         allezinnen = text.split('.')
 
-                        # het verdelen
                         for zin in allezinnen:
                             zin = zin.strip()
                             if zin: 
                                 print(zin + ".")
 
                     bestandlezen(bestand)
-                    
+                                    
                     print("Je hebt gekozen:", bestand)
-                    importtekst = bestandlezen(bestand)       
 
                 else:
                     print("Geen bestand gekozen")
