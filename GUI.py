@@ -17,18 +17,38 @@ manager = pygame_gui.UIManager((800, 600))
 
 # Bestaande knoppen
 
-uitzetknop = pygame_gui.elements.UIButton(
-    relative_rect=pygame.Rect((0, 425), (500, 75)),
-    text='Import tekstbestand.',
-    
+titelvak = pygame_gui.elements.UITextBox(
+    relative_rect=pygame.Rect((0, 0), (500, 75)),
+    html_text = 'text to slide',
     manager=manager
 )
 
-titelvak = pygame_gui.elements.UILabel(
-    relative_rect=pygame.Rect((0, 100), (500, 75)),
-    text='Text to slide',
+textvak = pygame_gui.elements.UITextBox(
+    relative_rect=pygame.Rect((0, 75), (500, 500)),
+    html_text = 'upload een text bestand om hem te veranderen in een presentatie',
     manager=manager
 )
+
+uitzetknop = pygame_gui.elements.UIButton(
+    relative_rect=pygame.Rect((0, 425), (500, 75)),
+    text = 'Import tekstbestand.',
+    
+    manager=manager
+)
+'''
+titelvak = pygame_gui.elements.UILabel(
+    relative_rect=pygame.Rect((0, 100), (500, 75)),
+    text = 'Text to slide',
+    manager=manager
+)
+'''
+# Kleur voor textvak
+'''
+textvak.colours['normal_bg'] = pygame.Color("#000000")
+textvak.colours['hovered_bg'] = pygame.Color("#232323")
+textvak.colours['active_bg'] = pygame.Color("#000000")
+textvak.rebuild()
+'''
 
 # Kleur voor uitzetknop
 uitzetknop.colours['normal_bg'] = pygame.Color("#000000")
