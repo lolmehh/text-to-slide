@@ -1,11 +1,13 @@
 {
     "button": {
         "font": {
+            "name": "Times New Roman Bold",
             "size": 20
         }
     },
     "label": {
         "font": {
+            "name": "Times New Roman Bold",
             "size": 100
         }
     }

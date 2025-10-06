@@ -67,13 +67,14 @@ while is_running:
                             if zin: 
                                 print(zin + ".")
 
-<<<<<<< HEAD
+                        for zin in allezinnen:
+                            zin = zin.strip
+                            if zin and zin[0] == "@":
+                                print(zin, "Dit is de titel")
+
+
                     bestandlezen(bestand)
-                                    
-=======
-                    ##bestandlezen(bestand)
                     
->>>>>>> acb60e8253e8af402199e2f55a504c08c9c9bd28
                     print("Je hebt gekozen:", bestand)
 
                 else:
