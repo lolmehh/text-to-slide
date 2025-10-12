@@ -103,7 +103,7 @@ while is_running:
                         for z in zinnen: #z staat voor zin
                             print("  ", z)
 
-                slideinhoud(slidelijsten)
+                slideinhoud(slidelijsten) 
 
         manager.process_events(event)
 
