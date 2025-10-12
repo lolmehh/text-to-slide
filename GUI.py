@@ -4,7 +4,6 @@ import tkinter as tk
 from tkinter import filedialog
 #from uitlezen import bestandlezen
 
-
 pygame.init()
 
 pygame.display.set_caption('Text to slide')
@@ -74,26 +73,30 @@ while is_running:
 
                         with open(bestand, "r") as f:
                             text = f.read()
-
-                        # verdeel de tekst in zinnen door middel van '.'
                         allezinnen = text.split('.')
 
-                        # het verdelen
-                        for zin in allezinnen:
-                            zin = zin.strip()
-                            if zin: 
-                                print(zin + ".")
+                        slidelijsten = {}
+                        slidenummer = 0
 
                         for zin in allezinnen:
                             zin = zin.strip()
+
                             if zin.startswith("@"):
-                                print(zin + " Dit is titel")
+                                slidenummer = slidenummer + 1
+                                slidelijsten[slidenummer] = [zin]
+                            else:
+                                if slidenummer not in slidelijsten:
+                                    slidelijsten[slidenummer] = []
+                                slidelijsten[slidenummer].append(zin)
 
-                    ##bestandlezen(bestand)
+                        for nummer, zinnen in slidelijsten.items():
+                            print(f"Slide {nummer}:")
+                            for z in zinnen:
+                                print("  ", z)
+
                     
-                    print("Je hebt gekozen:", bestand)
-                    importtekst = bestandlezen(bestand)       
-
+                    print("Je hebt gekozen:", bestand)      
+                    bestandlezen(bestand)
                 else:
                     print("Geen bestand gekozen")
 
