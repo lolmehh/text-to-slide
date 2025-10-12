@@ -1,6 +1,10 @@
 from pptx import Presentation
 import os
 
+from GUI import slidelijsten
+print(slidelijsten)
+
+
 # Maak een nieuwe presentatie
 prs = Presentation()
 
