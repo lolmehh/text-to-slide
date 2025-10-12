@@ -83,22 +83,27 @@ while is_running:
 
                             if zin.startswith("@"):
                                 slidenummer = slidenummer + 1
+                                zin = zin[1:] #haalt @ weg uit presentatie
                                 slidelijsten[slidenummer] = [zin]
                             else:
                                 if slidenummer not in slidelijsten:
+                                    #als de eerste zin(nen) geen @ hebben
                                     slidelijsten[slidenummer] = []
                                 slidelijsten[slidenummer].append(zin)
 
-                        for nummer, zinnen in slidelijsten.items():
-                            print(f"Slide {nummer}:")
-                            for z in zinnen:
-                                print("  ", z)
-
-                    
-                    print("Je hebt gekozen:", bestand)      
-                    bestandlezen(bestand)
+                        return slidelijsten
+                    print("Gekozen bestand:", bestand)      
+                    slidelijsten = bestandlezen(bestand)
                 else:
                     print("Geen bestand gekozen")
+
+                def slideinhoud(slidelijsten):
+                    for nummer, zinnen in slidelijsten.items():
+                        print(f"Slide {nummer}:")
+                        for z in zinnen: #z staat voor zin
+                            print("  ", z)
+
+                slideinhoud(slidelijsten)
 
         manager.process_events(event)
 
