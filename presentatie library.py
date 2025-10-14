@@ -28,11 +28,11 @@ def inhoudslides():
         title = slide.shapes.title
         content = slide.placeholders[1]
 
-        # Eerste zin = titel (bijv.)
+        #Eerste zin
         if len(zinnen) > 0:
             title.text = zinnen[0].strip()
 
-        # Rest = inhoud van de slide
+        # degene die daarachter geplakt worden
         if len(zinnen) > 1:
             inhoud = "\n".join(zinnen[1:]).strip()
             content.text = inhoud
