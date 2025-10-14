@@ -81,17 +81,27 @@ while is_running:
                         for zin in allezinnen:
                             zin = zin.strip()
 
-                            if zin.startswith("@"):
+                            if zin.startswith("#"):
+                                zin = zin[1:]
+                                if 0 in slidelijsten and slidelijsten[0] is not None:
+                                    slidelijsten[0].append(zin)
+                                else:
+                                    slidelijsten[0] = []
+                                    slidelijsten[0].append(zin)
+                                
+                            elif zin.startswith("@"):
                                 slidenummer = slidenummer + 1
                                 zin = zin[1:] #haalt @ weg uit presentatie
-                                slidelijsten[slidenummer] = [zin]
+                                slidelijsten[slidenummer] = [zin]                            
                             else:
                                 if slidenummer not in slidelijsten:
-                                    #als de eerste zin(nen) geen @ hebben
+                                    #als de eerste zin(nen) geen @ of # hebben
+                                    slidenummer = 1
                                     slidelijsten[slidenummer] = []
                                 slidelijsten[slidenummer].append(zin)
 
                         return slidelijsten
+                    
                     print("Gekozen bestand:", bestand)      
                     slidelijsten = bestandlezen(bestand)
                 else:
