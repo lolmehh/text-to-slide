@@ -21,7 +21,7 @@ titelslideophalen()
 
 # Maak de inhoudslides
 def inhoudslides():
-    for nummer, zinnen in slidelijsten.items():
+    for zinnen in slidelijsten.items():
         slide_layout = prs.slide_layouts[1]  # "Titel en inhoud" layout
         slide = prs.slides.add_slide(slide_layout)
 
