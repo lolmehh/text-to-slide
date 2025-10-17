@@ -12,7 +12,7 @@ window_surface = pygame.display.set_mode((500, 500))
 background = pygame.Surface((800, 600))
 background.fill(pygame.Color("#FFFFFF"))
 
-manager = pygame_gui.UIManager((800, 600), 'theme.json')
+manager = pygame_gui.UIManager((800, 600))
 
 # Bestaande knoppen
 
