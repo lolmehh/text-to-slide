@@ -99,21 +99,15 @@ while is_running:
                                     slidenummer = 1
                                     slidelijsten[slidenummer] = []
                                 slidelijsten[slidenummer].append(zin)
-
                         return slidelijsten
                     
                     print("Gekozen bestand:", bestand)      
                     slidelijsten = bestandlezen(bestand)
+
+
+                    
                 else:
                     print("Geen bestand gekozen")
-
-                def slideinhoud(slidelijsten):
-                    for nummer, zinnen in slidelijsten.items():
-                        print(f"Slide {nummer}:")
-                        for z in zinnen: #z staat voor zin
-                            print("  ", z)
-
-                slideinhoud(slidelijsten) 
 
         manager.process_events(event)
 
