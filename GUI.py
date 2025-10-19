@@ -21,11 +21,28 @@ manager = pygame_gui.UIManager((800, 600))
 
 # Bestaande knoppen
 
+
+manager.get_theme().add_font_paths("Arial", "C:/Windows/Fonts/arial.ttf")
+manager.get_theme().load_fonts()
+
+# Maak de knop met object_id
 uitzetknop = pygame_gui.elements.UIButton(
     relative_rect=pygame.Rect((0, 425), (500, 75)),
-    text='Import tekstbestand.',
-    manager=manager
+    text='Import tekstbestand',
+    manager=manager,
+    object_id="#groteBoldKnop"
 )
+
+# Kleurinstellingen (werkt direct)
+uitzetknop.colours['normal_text'] = pygame.Color("#FFFFFF")
+uitzetknop.colours['hovered_text'] = pygame.Color("#9B9B9B")
+uitzetknop.colours['active_text'] = pygame.Color("#8A8A8A")
+uitzetknop.rebuild()
+
+# Font toepassen via theme style (object_id moet in theme bestaan)
+manager.get_theme().add_font("Arial", 50, bold=True)  # font + size + bold
+manager.get_theme().load_fonts()
+
 
 textbox = pygame_gui.elements.UITextBox(
     relative_rect=pygame.Rect((0, 75), (500, 350)),
@@ -145,17 +162,18 @@ while is_running:
                             PPTXnaam = "Menu"
                             downloads = os.path.join(os.path.expanduser("~"), "Downloads")
                             PPTXbestand = os.path.join(downloads, f"{PPTXnaam}.pptx")
-                            
+                            bestandnaam = f"{PPTXnaam}.pptx"
+
                             achtergetal = 0
                             while os.path.exists(PPTXbestand):
                                 achtergetal += 1
                                 PPTXbestand = os.path.join(downloads, f"{PPTXnaam}({achtergetal}).pptx")
-
+                                bestandnaam = f"{PPTXnaam}({achtergetal}).pptx"
                             prs.save(PPTXbestand)
 
                             textbox = pygame_gui.elements.UITextBox(
                                 relative_rect=pygame.Rect((0, 75), (500, 350)),
-                                html_text=f"Presentatie opgeslagen op de volgende locatie: {PPTXbestand}",
+                                html_text=f"<b><font color='#FFFFFF'>{bestandnaam}</font></b> opgeslagen op de volgende locatie: <b><font color='#FFFFFF'>{PPTXbestand}</font></b>",
                                 manager=manager
                             )
 
