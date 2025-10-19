@@ -19,6 +19,12 @@ background.fill(pygame.Color("#FFFFFF"))
 
 manager = pygame_gui.UIManager((500, 500))
 
+manager.preload_fonts([
+    {'name': 'noto_sans', 'point_size': 14, 'style': 'bold', 'antialiased': '1'},
+    {'name': 'noto_sans', 'point_size': 18, 'style': 'regular', 'antialiased': '1'},
+    {'name': 'noto_sans', 'point_size': 48, 'style': 'regular', 'antialiased': '1'}
+])
+
 importeerknop = pygame_gui.elements.UIButton(
     relative_rect=pygame.Rect((0, 425), (500, 75)),
     text='Import tekstbestand',
@@ -33,13 +39,13 @@ bestandnaamvak = pygame_gui.elements.UITextEntryLine(
 
 textbox = pygame_gui.elements.UITextBox(
     relative_rect=pygame.Rect((0, 75), (500, 300)),
-    html_text='upload een text bestand om te veranderen in een presentatie',
+    html_text="<font size=5>Upload een .txt bestand die je wil gebruiken om een .PPTX bestand te maken.</font>",
     manager=manager
 )
 
 titlebox = pygame_gui.elements.UITextBox(
     relative_rect=pygame.Rect((0, 0), (500, 75)),
-    html_text='text to slide',
+    html_text='<font bold><font size=7>         Text To Slide</font></font>',
     manager=manager
 )
 
@@ -106,11 +112,9 @@ while is_running:
 
                         prs = Presentation()
 
-                        # Maak een titelslide (optioneel)
                         def titelslideophalen():
                             if 0 not in slidelijsten:
-                                print("Geen titelslide gevonden, sla deze stap over.")
-                                return  # niks doen als er geen titelslide is
+                                return  # geen titelslide
 
                             slide_layout = prs.slide_layouts[0]  # Titel-layout
                             slide = prs.slides.add_slide(slide_layout)
@@ -160,7 +164,7 @@ while is_running:
                             prs.save(PPTXbestand)
 
                             textbox.set_text(
-                                f"<b><font color='#FFFFFF'>{bestandnaam}</font></b> opgeslagen op de volgende locatie: <b><font color='#FFFFFF'>{PPTXbestand}</font></b>"
+                                f"<font size=5><b><font color='#FFFFFF'>{bestandnaam}</font></b> opgeslagen op de volgende locatie: <b><font color='#FFFFFF'>{PPTXbestand}</font></b></font>"
                             )
 
                             print(f"Presentatie opgeslagen als: {PPTXbestand}")
