@@ -1,1 +1,0 @@
-#alles staat nu in de GUI.py vanwege een probleem dat ik niet kon oplossen
