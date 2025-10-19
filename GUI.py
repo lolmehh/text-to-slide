@@ -7,6 +7,8 @@ from tkinter import filedialog
 from pptx import Presentation
 import os
 
+global textbox
+
 pygame.init()
 
 pygame.display.set_caption('Text to slide')
@@ -37,11 +39,7 @@ titlebox = pygame_gui.elements.UITextBox(
     manager=manager
 )
 
-titelvak = pygame_gui.elements.UILabel(
-    relative_rect=pygame.Rect((0, 100), (500, 75)),
-    text='Text to slide',
-    manager=manager
-)
+
 
 # Kleur voor uitzetknop
 uitzetknop.colours['normal_bg'] = pygame.Color("#000000")
@@ -108,6 +106,10 @@ while is_running:
 
                         # Maak een titelslide (optioneel)
                         def titelslideophalen():
+                            if 0 not in slidelijsten:
+                                print("Geen titelslide gevonden, sla deze stap over.")
+                                return  # niks doen als er geen titelslide is
+
                             slide_layout = prs.slide_layouts[0]  # Titel-layout
                             slide = prs.slides.add_slide(slide_layout)
                             title = slide.shapes.title
@@ -140,10 +142,23 @@ while is_running:
                                     content.text = inhoud
 
                         def bestandopslaan():
+                            PPTXnaam = "Menu"
                             downloads = os.path.join(os.path.expanduser("~"), "Downloads")
-                            PPTXbestand = os.path.join(downloads, "Menu.pptx")
+                            PPTXbestand = os.path.join(downloads, f"{PPTXnaam}.pptx")
+                            
+                            achtergetal = 0
+                            while os.path.exists(PPTXbestand):
+                                achtergetal += 1
+                                PPTXbestand = os.path.join(downloads, f"{PPTXnaam}({achtergetal}).pptx")
 
                             prs.save(PPTXbestand)
+
+                            textbox = pygame_gui.elements.UITextBox(
+                                relative_rect=pygame.Rect((0, 75), (500, 350)),
+                                html_text=f"Presentatie opgeslagen op de volgende locatie: {PPTXbestand}",
+                                manager=manager
+                            )
+
                             print(f"Presentatie opgeslagen als: {PPTXbestand}")
 
                         titelslideophalen()
