@@ -17,35 +17,22 @@ window_surface = pygame.display.set_mode((500, 500))
 background = pygame.Surface((800, 600))
 background.fill(pygame.Color("#FFFFFF"))
 
-manager = pygame_gui.UIManager((800, 600))
+manager = pygame_gui.UIManager((500, 500))
 
-# Bestaande knoppen
-
-
-manager.get_theme().add_font_paths("Arial", "C:/Windows/Fonts/arial.ttf")
-manager.get_theme().load_fonts()
-
-# Maak de knop met object_id
-uitzetknop = pygame_gui.elements.UIButton(
+importeerknop = pygame_gui.elements.UIButton(
     relative_rect=pygame.Rect((0, 425), (500, 75)),
     text='Import tekstbestand',
     manager=manager,
-    object_id="#groteBoldKnop"
 )
 
-# Kleurinstellingen (werkt direct)
-uitzetknop.colours['normal_text'] = pygame.Color("#FFFFFF")
-uitzetknop.colours['hovered_text'] = pygame.Color("#9B9B9B")
-uitzetknop.colours['active_text'] = pygame.Color("#8A8A8A")
-uitzetknop.rebuild()
-
-# Font toepassen via theme style (object_id moet in theme bestaan)
-manager.get_theme().add_font("Arial", 50, bold=True)  # font + size + bold
-manager.get_theme().load_fonts()
-
+bestandnaamvak = pygame_gui.elements.UITextEntryLine(
+    relative_rect=pygame.Rect((0, 375), (500, 50)),
+    placeholder_text="Typ hier de naam van je PPTX",
+    manager=manager
+)
 
 textbox = pygame_gui.elements.UITextBox(
-    relative_rect=pygame.Rect((0, 75), (500, 350)),
+    relative_rect=pygame.Rect((0, 75), (500, 300)),
     html_text='upload een text bestand om te veranderen in een presentatie',
     manager=manager
 )
@@ -56,13 +43,11 @@ titlebox = pygame_gui.elements.UITextBox(
     manager=manager
 )
 
-
-
-# Kleur voor uitzetknop
-uitzetknop.colours['normal_bg'] = pygame.Color("#000000")
-uitzetknop.colours['hovered_bg'] = pygame.Color("#232323")
-uitzetknop.colours['active_bg'] = pygame.Color("#000000")
-uitzetknop.rebuild()
+# Kleur voor importeerknop
+importeerknop.colours['normal_bg'] = pygame.Color("#000000")
+importeerknop.colours['hovered_bg'] = pygame.Color("#232323")
+importeerknop.colours['active_bg'] = pygame.Color("#000000")
+importeerknop.rebuild()
 
 clock = pygame.time.Clock()
 is_running = True
@@ -75,7 +60,7 @@ while is_running:
 
         if event.type == pygame_gui.UI_BUTTON_PRESSED:
 
-            if event.ui_element == uitzetknop   :
+            if event.ui_element == importeerknop   :
                 import tkinter as tk
                 from tkinter import filedialog
 
@@ -159,7 +144,10 @@ while is_running:
                                     content.text = inhoud
 
                         def bestandopslaan():
-                            PPTXnaam = "Menu"
+                            PPTXnaam = bestandnaamvak.get_text()
+                            if PPTXnaam == "":
+                                PPTXnaam = "Text-To-Slide"
+
                             downloads = os.path.join(os.path.expanduser("~"), "Downloads")
                             PPTXbestand = os.path.join(downloads, f"{PPTXnaam}.pptx")
                             bestandnaam = f"{PPTXnaam}.pptx"
@@ -171,10 +159,8 @@ while is_running:
                                 bestandnaam = f"{PPTXnaam}({achtergetal}).pptx"
                             prs.save(PPTXbestand)
 
-                            textbox = pygame_gui.elements.UITextBox(
-                                relative_rect=pygame.Rect((0, 75), (500, 350)),
-                                html_text=f"<b><font color='#FFFFFF'>{bestandnaam}</font></b> opgeslagen op de volgende locatie: <b><font color='#FFFFFF'>{PPTXbestand}</font></b>",
-                                manager=manager
+                            textbox.set_text(
+                                f"<b><font color='#FFFFFF'>{bestandnaam}</font></b> opgeslagen op de volgende locatie: <b><font color='#FFFFFF'>{PPTXbestand}</font></b>"
                             )
 
                             print(f"Presentatie opgeslagen als: {PPTXbestand}")
