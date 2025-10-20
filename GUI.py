@@ -1,6 +1,5 @@
 import pygame
 import pygame_gui
-import pyautogui
 import tkinter as tk
 from tkinter import filedialog
 #from uitlezen import bestandlezen
@@ -8,17 +7,17 @@ from tkinter import filedialog
 from pptx import Presentation
 import os
 
-global textbox
-screen_x, screen_y = pyautogui.size()
+global textbox, titel_error_weergeven
+
 pygame.init()
 
 pygame.display.set_caption('Text to slide')
-window_surface = pygame.display.set_mode((screen_x, screen_y))
+window_surface = pygame.display.set_mode((500, 500))
 
-background = pygame.Surface((screen_x, screen_y))
+background = pygame.Surface((800, 600))
 background.fill(pygame.Color("#FFFFFF"))
 
-manager = pygame_gui.UIManager((screen_x, screen_y))
+manager = pygame_gui.UIManager((500, 500))
 
 manager.preload_fonts([
     {'name': 'noto_sans', 'point_size': 14, 'style': 'bold', 'antialiased': '1'},
@@ -27,26 +26,33 @@ manager.preload_fonts([
 ])
 
 importeerknop = pygame_gui.elements.UIButton(
-    relative_rect=pygame.Rect((0, 425), (screen_x, 75)),
+    relative_rect=pygame.Rect((0, 425), (500, 75)),
     text='Import tekstbestand',
     manager=manager,
 )
 
 bestandnaamvak = pygame_gui.elements.UITextEntryLine(
-    relative_rect=pygame.Rect((0, 375), (screen_x, 50)),
+    relative_rect=pygame.Rect((0, 375), (500, 50)),
     placeholder_text="Typ hier de naam van je PPTX",
     manager=manager
 )
 
 textbox = pygame_gui.elements.UITextBox(
-    relative_rect=pygame.Rect((0, 75), (screen_x, 300)),
+    relative_rect=pygame.Rect((0, 75), (500, 300)),
     html_text="<font size=5>Upload een .txt bestand die je wil gebruiken om een .PPTX bestand te maken.</font>",
     manager=manager
 )
 
+titel_error_weergeven = False
+def add_to_log(log_tekst):
+    huidige_tekst = textbox.html_text
+    nieuwe_tekst = huidige_tekst + f"<br>{log_tekst}"
+    textbox.set_text(nieuwe_tekst)
+
+
 titlebox = pygame_gui.elements.UITextBox(
-    relative_rect=pygame.Rect((0, 0), (screen_x, 75)),
-    html_text='<font bold><font size=7>        Text To Slide</font></font>',
+    relative_rect=pygame.Rect((0, 0), (500, 75)),
+    html_text='<font bold><font size=7>         Text To Slide</font></font>',
     manager=manager
 )
 
@@ -80,6 +86,7 @@ while is_running:
 
                 if bestand:
                     def bestandlezen(bestand):
+                        global titel_error_weergeven
 
                         with open(bestand, "r") as f:
                             text = f.read()
@@ -94,10 +101,23 @@ while is_running:
                             if zin.startswith("#"):
                                 zin = zin[1:]
                                 if 0 in slidelijsten and slidelijsten[0] is not None:
-                                    slidelijsten[0].append(zin)
+                                    #de voorpagina mag maar twee zinnen krijgen dus als die meer dan dat krijgt wordt dat niet toegevoegd
+                                    #en wordt er een error gegeven. en dat maar een keer vanwege de titel_error_weergeven variabel 
+                                    if len(slidelijsten[0]) < 2:
+                                        slidelijsten[0].append(zin)
+                                    elif len(slidelijsten[0]) >= 2:
+                                        if titel_error_weergeven == False:
+                                            log_tekst = (
+                                                f"<font size=5><b><font color='#ff0000'>Error: kon de volgende zin niet in presentatie zetten:</font></b> <i>'{zin}'</i> </font>"
+                                                f"<font size=5><b><font color='#11ff00'>Oplossing:</font></b> Er mogen maximaal twee (sub)titelzinnen worden opgegeven (zinnen die beginnen met #). '</font>"
+                                                f"<font size=5><b><font color='#335fff'>De presentatie is zonder deze zin(nen). </font>"
+                                            )
+                                            add_to_log(log_tekst)
+                                            titel_error_weergeven = True
                                 else:
                                     slidelijsten[0] = []
                                     slidelijsten[0].append(zin)
+
                                 
                             elif zin.startswith("@"):
                                 slidenummer = slidenummer + 1
@@ -164,15 +184,17 @@ while is_running:
                                 bestandnaam = f"{PPTXnaam}({achtergetal}).pptx"
                             prs.save(PPTXbestand)
 
-                            textbox.set_text(
-                                f"<font size=5><b><font color='#FFFFFF'>{bestandnaam}</font></b> opgeslagen op de volgende locatie: <b><font color='#FFFFFF'>{PPTXbestand}</font></b></font>"
+                            log_tekst = (
+                                f"<font size=5><b><font color='#FFFFFF'>{bestandnaam}</font></b> opgeslagen op de volgende locatie: <font color='#FFFFFF'>{PPTXbestand}</font></b></font>"
                             )
+                            add_to_log(log_tekst)
 
                             print(f"Presentatie opgeslagen als: {PPTXbestand}")
 
                         titelslideophalen()
                         inhoudslides()
                         bestandopslaan()
+                        titel_error_weergeven = False
                     
                     print("Gekozen bestand:", bestand)      
                     slidelijsten = bestandlezen(bestand)
