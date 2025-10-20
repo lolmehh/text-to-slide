@@ -1,5 +1,6 @@
 import pygame
 import pygame_gui
+import pyautogui
 import tkinter as tk
 from tkinter import filedialog
 #from uitlezen import bestandlezen
@@ -8,16 +9,16 @@ from pptx import Presentation
 import os
 
 global textbox
-
+screen_x, screen_y = pyautogui.size()
 pygame.init()
 
 pygame.display.set_caption('Text to slide')
-window_surface = pygame.display.set_mode((500, 500))
+window_surface = pygame.display.set_mode((screen_x, screen_y))
 
-background = pygame.Surface((800, 600))
+background = pygame.Surface((screen_x, screen_y))
 background.fill(pygame.Color("#FFFFFF"))
 
-manager = pygame_gui.UIManager((500, 500))
+manager = pygame_gui.UIManager((screen_x, screen_y))
 
 manager.preload_fonts([
     {'name': 'noto_sans', 'point_size': 14, 'style': 'bold', 'antialiased': '1'},
@@ -26,26 +27,26 @@ manager.preload_fonts([
 ])
 
 importeerknop = pygame_gui.elements.UIButton(
-    relative_rect=pygame.Rect((0, 425), (500, 75)),
+    relative_rect=pygame.Rect((0, 425), (screen_x, 75)),
     text='Import tekstbestand',
     manager=manager,
 )
 
 bestandnaamvak = pygame_gui.elements.UITextEntryLine(
-    relative_rect=pygame.Rect((0, 375), (500, 50)),
+    relative_rect=pygame.Rect((0, 375), (screen_x, 50)),
     placeholder_text="Typ hier de naam van je PPTX",
     manager=manager
 )
 
 textbox = pygame_gui.elements.UITextBox(
-    relative_rect=pygame.Rect((0, 75), (500, 300)),
+    relative_rect=pygame.Rect((0, 75), (screen_x, 300)),
     html_text="<font size=5>Upload een .txt bestand die je wil gebruiken om een .PPTX bestand te maken.</font>",
     manager=manager
 )
 
 titlebox = pygame_gui.elements.UITextBox(
-    relative_rect=pygame.Rect((0, 0), (500, 75)),
-    html_text='<font bold><font size=7>         Text To Slide</font></font>',
+    relative_rect=pygame.Rect((0, 0), (screen_x, 75)),
+    html_text='<font bold><font size=7>        Text To Slide</font></font>',
     manager=manager
 )
 
