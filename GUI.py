@@ -98,7 +98,12 @@ while is_running:
                         for zin in allezinnen:
                             zin = zin.strip()
 
-                            if zin.startswith("#"):
+                            if zin.startswith("\\"):
+                                slidenummer = slidenummer + 1
+                                zin = zin[1:] #haalt \ weg uit presentatie
+                                slidelijsten[slidenummer] = [zin]
+
+                            elif zin.startswith("#"):
                                 zin = zin[1:]
                                 if 0 in slidelijsten and slidelijsten[0] is not None:
                                     #de voorpagina mag maar twee zinnen krijgen dus als die meer dan dat krijgt wordt dat niet toegevoegd
