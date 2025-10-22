@@ -142,8 +142,7 @@ while is_running:
                             positieHaakjeDicht = zin.find("]")
                             if positieHaakjeOpen >= 0:
                                 for i in zin[positieHaakjeOpen:positieHaakjeDicht]:
-                                    font = run.font
-                                    font.bold = True
+                                    i.bold = True
 
 
 
