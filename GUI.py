@@ -1,5 +1,6 @@
 import pygame
 import pygame_gui
+from pptx.util import Pt
 import tkinter as tk
 from tkinter import filedialog
 #from uitlezen import bestandlezen
@@ -21,6 +22,8 @@ manager = pygame_gui.UIManager((500, 500))
 
 manager.preload_fonts([
     {'name': 'noto_sans', 'point_size': 14, 'style': 'bold', 'antialiased': '1'},
+    {'name': 'noto_sans', 'point_size': 18, 'style': 'bold', 'antialiased': '1'},
+    {'name': 'noto_sans', 'point_size': 18, 'style': 'italic', 'antialiased': '1'},
     {'name': 'noto_sans', 'point_size': 18, 'style': 'regular', 'antialiased': '1'},
     {'name': 'noto_sans', 'point_size': 48, 'style': 'regular', 'antialiased': '1'}
 ])
@@ -134,7 +137,15 @@ while is_running:
                                     slidenummer = 1
                                     slidelijsten[slidenummer] = []
                                 slidelijsten[slidenummer].append(zin)
-                        
+
+                            positieHaakjeOpen = zin.find("[")
+                            positieHaakjeDicht = zin.find("]")
+                            if positieHaakjeOpen >= 0:
+                                for i in zin[positieHaakjeOpen:positieHaakjeDicht]:
+                                    font = run.font
+                                    font.bold = True
+
+
 
                         prs = Presentation()
 
