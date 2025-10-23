@@ -49,14 +49,14 @@ textbox = pygame_gui.elements.UITextBox(
     manager=manager
 )
 
-titel_error_weergeven, kleur_error_weergeven = False, False
+titel_error_weergeven, kleur_error_woordgeving_weergeven, kleur_gekozen_error_weergeven, kleur_gekozen = False, False, False, False
 def add_to_log(log_tekst):
     huidige_tekst = textbox.html_text
     nieuwe_tekst = huidige_tekst + f"<br>{log_tekst}"
     textbox.set_text(nieuwe_tekst)
     
     textbox.rebuild()
-    textbox.scroll_position = 1.0 # automatisch naar onderkant scrollbar scrollen
+    textbox.scroll_position = 0.5 # automatisch naar onderkant scrollbar scrollen
 
 
 titlebox = pygame_gui.elements.UITextBox(
@@ -95,7 +95,7 @@ while is_running:
 
                 if bestand:
                     def bestandlezen(bestand):
-                        global titel_error_weergeven, kleur_error_weergeven
+                        global titel_error_weergeven, kleur_error_woordgeving_weergeven, kleur_gekozen_error_weergeven, kleur_gekozen
 
                         achtergrondkleur = RGBColor(255, 255, 255)
 
@@ -141,6 +141,16 @@ while is_running:
                                 slidelijsten[slidenummer] = [zin] 
 
                             elif zin.startswith("!"):
+                                if kleur_gekozen == False: # is errormessage al verschenen?
+                                    if kleur_gekozen_error_weergeven == False:  #is er al een kleur gekozen
+                                        log_tekst = (
+                                            f"<font size=5><b><font color='#ff0000'>Error: Achtergrondkleur al gegeven:</font></b> <i>'{zin}'</i> </font>"
+                                            f"<font size=5><b><font color='#11ff00'>Oplossing:</font></b> Er mag maximaal een achtergrondkleur worden opgegeven '</font>"
+                                            f"<font size=5><b><font color='#335fff'>De achtergrondkleur van de presentatie is de eerste gegeven kleur geworden. </font>"
+                                        )
+                                        add_to_log(log_tekst)
+                                        kleur_gekozen_error_weergeven = True
+                                        
                                 zin = zin[1:]  # haalt ! weg
                                 # BRON: ChatGPT
                                 # PROMPT: Leg uit waarom achtergrondkleur = "RGBColor(53, 75, 32) niet werkt"
@@ -152,19 +162,21 @@ while is_running:
                                 # Als foutief achtergrondkleur = wit
 
                                 try:
-                                    rgb_tuple = tuple(map(int, zin.strip("() ").split(",")))
-                                    achtergrondkleur = RGBColor(*rgb_tuple)
+                                    # alleen achtergrondkleur selecteren als er geen errors waren bij kleurselecties om onverwachte uitkomsten stoppen.
+                                    if kleur_error_woordgeving_weergeven == False or kleur_gekozen_error_weergeven == False:
+                                        rgb_tuple = tuple(map(int, zin.strip("() ").split(",")))
+                                        achtergrondkleur = RGBColor(*rgb_tuple)
+                                        kleur_gekozen = True
                                 except Exception as e:
-                                    if kleur_error_weergeven == False:
+                                    if kleur_error_woordgeving_weergeven == False:
                                             log_tekst = (
                                                 f"<font size=5><b><font color='#ff0000'>Error: kon achtergrondkleur niet bepalen:</font></b> <i>'{zin}'</i> </font>"
-                                                f"<font size=5><b><font color='#11ff00'>Oplossing:</font></b> Formateer de achtergrondkleur als '!(R, G, B).'. Correct voorbeeld: '!(122, 53, 36).' '</font>"
+                                                f"<font size=5><b><font color='#11ff00'>Oplossing:</font></b> Formateer de achtergrondkleur als '!(R, G, B).'. Correct voorbeeld: '!(122, 53, 36).' Getal mag 1 t/m 255 zijn. '</font>"
                                                 f"<font size=5><b><font color='#335fff'>De achtergrond van de presentatie is wit gebleven. </font>"
                                             )
                                             add_to_log(log_tekst)
-                                            kleur_error_weergeven = True
-                                    print("Fout bij kleurparsing:", e)
-                                    achtergrondkleur = RGBColor(255, 255, 255)
+                                            kleur_error_woordgeving_weergeven = True
+                                    achtergrondkleur = RGBColor(255, 255, 255) # Geen goede kleur dan witte achtergrond
 
                             else:
                                 if slidenummer not in slidelijsten:
@@ -245,7 +257,8 @@ while is_running:
                             prs.save(PPTXbestand)
 
                             log_tekst = (
-                                f"<font size=5><b><font color='#FFFFFF'>{bestandnaam}</font></b> opgeslagen op de volgende locatie: <font color='#FFFFFF'>{PPTXbestand}</font></b></font>"
+                                f"<font size=5><b><font color='#FFFFFF'>{bestandnaam}</font></b> opgeslagen op de volgende locatie: <b><font color='#FFFFFF'>{PPTXbestand}</font></b></font>"
+                                f"<font size=5><b>--------------------------------------------------------------------------</font></b>"
                             )
                             add_to_log(log_tekst)
 
@@ -254,7 +267,7 @@ while is_running:
                         titelslideophalen()
                         inhoudslides()
                         bestandopslaan()
-                        titel_error_weergeven, kleur_error_weergeven = False, False
+                        titel_error_weergeven, kleur_error_woordgeving_weergeven, kleur_gekozen_error_weergeven, kleur_gekozen = False, False, False, False
                     
                     print("Gekozen bestand:", bestand)      
                     slidelijsten = bestandlezen(bestand)
