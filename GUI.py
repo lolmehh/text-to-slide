@@ -3,6 +3,8 @@ import pygame_gui
 from pptx.util import Pt
 import tkinter as tk
 from tkinter import filedialog
+from pptx import Presentation
+from pptx.dml.color import RGBColor
 #from uitlezen import bestandlezen
 
 from pptx import Presentation
@@ -25,7 +27,8 @@ manager.preload_fonts([
     {'name': 'noto_sans', 'point_size': 18, 'style': 'bold', 'antialiased': '1'},
     {'name': 'noto_sans', 'point_size': 18, 'style': 'italic', 'antialiased': '1'},
     {'name': 'noto_sans', 'point_size': 18, 'style': 'regular', 'antialiased': '1'},
-    {'name': 'noto_sans', 'point_size': 48, 'style': 'regular', 'antialiased': '1'}
+    {'name': 'noto_sans', 'point_size': 48, 'style': 'regular', 'antialiased': '1'},
+    {'name': 'noto_sans', 'point_size': 18, 'style': 'bold_italic', 'antialiased': '1'}
 ])
 
 importeerknop = pygame_gui.elements.UIButton(
@@ -46,11 +49,14 @@ textbox = pygame_gui.elements.UITextBox(
     manager=manager
 )
 
-titel_error_weergeven = False
+titel_error_weergeven, kleur_error_weergeven = False, False
 def add_to_log(log_tekst):
     huidige_tekst = textbox.html_text
     nieuwe_tekst = huidige_tekst + f"<br>{log_tekst}"
     textbox.set_text(nieuwe_tekst)
+    
+    textbox.rebuild()
+    textbox.scroll_position = 1.0 # automatisch naar onderkant scrollbar scrollen
 
 
 titlebox = pygame_gui.elements.UITextBox(
@@ -89,7 +95,9 @@ while is_running:
 
                 if bestand:
                     def bestandlezen(bestand):
-                        global titel_error_weergeven
+                        global titel_error_weergeven, kleur_error_weergeven
+
+                        achtergrondkleur = RGBColor(255, 255, 255)
 
                         with open(bestand, "r") as f:
                             text = f.read()
@@ -130,7 +138,34 @@ while is_running:
                             elif zin.startswith("@"):
                                 slidenummer = slidenummer + 1
                                 zin = zin[1:] #haalt @ weg uit presentatie
-                                slidelijsten[slidenummer] = [zin]                            
+                                slidelijsten[slidenummer] = [zin] 
+
+                            elif zin.startswith("!"):
+                                zin = zin[1:]  # haalt ! weg
+                                # BRON: ChatGPT
+                                # PROMPT: Leg uit waarom achtergrondkleur = "RGBColor(53, 75, 32) niet werkt"
+
+                                # Uitleg: Het werkte niet omdat bij het maken van de slides het programma een string terugkreeg
+                                # Dat begreep het programma niet omdat het losse kleurwaardes verwachtte (ipv R, G, B kreeg het RGB, -, - binnen)
+                                
+                                # Dit splits de gegeven kleurencodes in de R, G en de B. Benoemt het variabel en controleert of de kleurcode niet foutief is. 
+                                # Als foutief achtergrondkleur = wit
+
+                                try:
+                                    rgb_tuple = tuple(map(int, zin.strip("() ").split(",")))
+                                    achtergrondkleur = RGBColor(*rgb_tuple)
+                                except Exception as e:
+                                    if kleur_error_weergeven == False:
+                                            log_tekst = (
+                                                f"<font size=5><b><font color='#ff0000'>Error: kon achtergrondkleur niet bepalen:</font></b> <i>'{zin}'</i> </font>"
+                                                f"<font size=5><b><font color='#11ff00'>Oplossing:</font></b> Formateer de achtergrondkleur als '!(R, G, B).'. Correct voorbeeld: '!(122, 53, 36).' '</font>"
+                                                f"<font size=5><b><font color='#335fff'>De achtergrond van de presentatie is wit gebleven. </font>"
+                                            )
+                                            add_to_log(log_tekst)
+                                            kleur_error_weergeven = True
+                                    print("Fout bij kleurparsing:", e)
+                                    achtergrondkleur = RGBColor(255, 255, 255)
+
                             else:
                                 if slidenummer not in slidelijsten:
                                     #als de eerste zin(nen) geen @ of # hebben
@@ -156,6 +191,11 @@ while is_running:
                             slide = prs.slides.add_slide(slide_layout)
                             title = slide.shapes.title
                             subtitle = slide.placeholders[1]
+                            
+                            background = slide.background
+                            fill = background.fill
+                            fill.solid()
+                            fill.fore_color.rgb = achtergrondkleur
 
                             title.text = slidelijsten[0][0]
                             subtitle.text = "\n".join(slidelijsten[0][1:]).strip()
@@ -168,6 +208,11 @@ while is_running:
 
                                 slide_layout = prs.slide_layouts[1]  # De layout (van de library) voor "Titel en inhoud"
                                 slide = prs.slides.add_slide(slide_layout)
+
+                                background = slide.background
+                                fill = background.fill
+                                fill.solid()
+                                fill.fore_color.rgb = achtergrondkleur
 
                                 title = slide.shapes.title
                                 content = slide.placeholders[1]
@@ -209,7 +254,7 @@ while is_running:
                         titelslideophalen()
                         inhoudslides()
                         bestandopslaan()
-                        titel_error_weergeven = False
+                        titel_error_weergeven, kleur_error_weergeven = False, False
                     
                     print("Gekozen bestand:", bestand)      
                     slidelijsten = bestandlezen(bestand)
