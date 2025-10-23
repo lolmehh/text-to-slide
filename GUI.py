@@ -138,13 +138,13 @@ while is_running:
                                     slidelijsten[slidenummer] = []
                                 slidelijsten[slidenummer].append(zin)
 
-                            positieHaakjeOpen = zin.find("[")   #gets the position from [ and ]. if none it will output -1
-                            positieHaakjeDicht = zin.find("]")
-                            if positieHaakjeOpen >= 0:  #checks if [ was found
-                                for i in zin[positieHaakjeOpen:positieHaakjeDicht]: #makes characters between teh brackets bold
-                                    character = ???.add_paragraph()     #according to the guide i must add something that resembles text box in ???. idk what variable you used
-                                    character.text = i
-                                    character.font.bold = True
+                            #positieHaakjeOpen = zin.find("[")   #gets the position from [ and ]. if none it will output -1
+                            #positieHaakjeDicht = zin.find("]")
+                            #if positieHaakjeOpen >= 0:  #checks if [ was found
+                            #    for i in zin[positieHaakjeOpen:positieHaakjeDicht]: #makes characters between teh brackets bold
+                            #        character = ???.add_paragraph()     #according to the guide i must add something that resembles text box in ???. idk what variable you used
+                            #        character.text = i
+                            #        character.font.bold = True
 
                         prs = Presentation()
 
