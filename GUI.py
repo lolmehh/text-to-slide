@@ -102,8 +102,8 @@ while is_running:
 
                         with open(bestand, "r") as f:
                             text = f.read()
-                        allezinnen = re.split(r'(?<!\\)\.', text)
-                        allezinnen = [zin.replace('\.', '.') for zin in allezinnen]
+                        allezinnen = re.split(r'(?<!\\)\.', text) #laat zinnen met een backslash voor de punt in tact
+                        allezinnen = [zin.replace('\.', '.') for zin in allezinnen] #veranderd de zinnen met \. erin in . zodat het correct weergeven wordt
 
                         slidelijsten = {}
                         slidenummer = 0
