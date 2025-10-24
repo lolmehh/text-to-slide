@@ -110,9 +110,8 @@ while is_running:
                             zin = zin.strip()
 
                             if zin.startswith("\\"):
-                                slidenummer = slidenummer + 1
                                 zin = zin[1:] #haalt \ weg uit presentatie
-                                slidelijsten[slidenummer] = [zin]
+                                slidelijsten[slidenummer].append(zin)
 
                             elif zin.startswith("#"):
                                 zin = zin[1:]
@@ -141,15 +140,7 @@ while is_running:
                                 slidelijsten[slidenummer] = [zin] 
 
                             elif zin.startswith("!"):
-                                if kleur_gekozen == False: # is errormessage al verschenen?
-                                    if kleur_gekozen_error_weergeven == False:  #is er al een kleur gekozen
-                                        log_tekst = (
-                                            f"<font size=5><b><font color='#ff0000'>Error: Achtergrondkleur al gegeven:</font></b> <i>'{zin}'</i> </font>"
-                                            f"<font size=5><b><font color='#11ff00'>Oplossing:</font></b> Er mag maximaal een achtergrondkleur worden opgegeven '</font>"
-                                            f"<font size=5><b><font color='#335fff'>De achtergrondkleur van de presentatie is de eerste gegeven kleur geworden. </font>"
-                                        )
-                                        add_to_log(log_tekst)
-                                        kleur_gekozen_error_weergeven = True
+
                                         
                                 zin = zin[1:]  # haalt ! weg
                                 # BRON: ChatGPT
@@ -177,6 +168,16 @@ while is_running:
                                             add_to_log(log_tekst)
                                             kleur_error_woordgeving_weergeven = True
                                     achtergrondkleur = RGBColor(255, 255, 255) # Geen goede kleur dan witte achtergrond
+
+                                if kleur_gekozen == False: # is errormessage al verschenen?
+                                    if kleur_gekozen_error_weergeven == False:  #is er al een kleur gekozen
+                                        log_tekst = (
+                                            f"<font size=5><b><font color='#ff0000'>Error: Achtergrondkleur al gegeven:</font></b> <i>'{zin}'</i> </font>"
+                                            f"<font size=5><b><font color='#11ff00'>Oplossing:</font></b> Er mag maximaal een achtergrondkleur worden opgegeven '</font>"
+                                            f"<font size=5><b><font color='#335fff'>De achtergrondkleur van de presentatie is de eerste gegeven kleur geworden. </font>"
+                                        )
+                                        add_to_log(log_tekst)
+                                        kleur_gekozen_error_weergeven = True
 
                             else:
                                 if slidenummer not in slidelijsten:
