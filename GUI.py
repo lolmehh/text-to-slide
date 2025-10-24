@@ -110,11 +110,16 @@ while is_running:
 
                         for zin in allezinnen:
                             zin = zin.strip()
+                            zin = zin.replace('\\.', '.').replace('\\@', '@').replace('\\#', '#')
 
+
+                            print(zin)
                             if zin.startswith("\\"):
+                                if zin.startswith("\\@"):
+                                    print("Nu doet hij het wel")
                                 if zin.startswith("\\#"):
                                     # overslaan
-                                    print()
+                                    print("Hij slaat over")
                                 else:
                                     if slidenummer == 0:
                                         slidenummer = 1
