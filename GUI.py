@@ -5,6 +5,7 @@ import tkinter as tk
 from tkinter import filedialog
 from pptx import Presentation
 from pptx.dml.color import RGBColor
+import re
 #from uitlezen import bestandlezen
 
 from pptx import Presentation
@@ -101,7 +102,8 @@ while is_running:
 
                         with open(bestand, "r") as f:
                             text = f.read()
-                        allezinnen = text.split('.')
+                        allezinnen = re.split(r'(?<!\\)\.', text)
+                        allezinnen = [zin.replace('\.', '.') for zin in allezinnen]
 
                         slidelijsten = {}
                         slidenummer = 0
@@ -110,8 +112,16 @@ while is_running:
                             zin = zin.strip()
 
                             if zin.startswith("\\"):
-                                zin = zin[1:] #haalt \ weg uit presentatie
-                                slidelijsten[slidenummer].append(zin)
+                                if zin.startswith("\\#"):
+                                    # overslaan
+                                    print()
+                                else:
+                                    if slidenummer == 0:
+                                        slidenummer = 1
+                                    if slidenummer not in slidelijsten:
+                                        slidelijsten[slidenummer] = []
+                                    zin = zin[1:]  # haalt \ weg uit presentatie
+                                    slidelijsten[slidenummer].append(zin)
 
                             elif zin.startswith("#"):
                                 zin = zin[1:]
