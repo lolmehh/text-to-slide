@@ -5,9 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Documentatie Text-To-Slide</title>
     <style>
+
+
+        header {
+            background-color: #2c5aa0;
+            margin: 0;
+            padding: 10px;
+            display: flex;                /* maakt flexbox aan */
+            justify-content: space-between; /* zorgt dat tekst links en link rechts staan */
+            align-items: center;          /* zorgt dat ze op dezelfde hoogte staan */
+        }
+
+        header p {
+            margin: 0px;
+            color: #FFFFFF;
+        }
+
+        .nav-button {
+            display: inline-block;
+            background-color: #2c5aa0;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            border: 2px solid #FFFFFF;
+            font-weight: bold;
+            transition: none;
+        }
+        
+        .nav-button:hover {
+            background-color: rgba(0, 0, 0, 0.315);
+        }
+
+        .nav-button:focus,
+        .nav-button:active {
+            outline: none;
+            box-shadow: none;
+            transform: none;
+            background-color: #3b6198;
+        }
+
+
+        
+
         body {
             font-family: Arial, sans-serif;
-            margin: 10px;
+            margin: 0px;
             padding: 0px;
             background-color: #f0f0f0;
             color: #333;
@@ -15,64 +58,72 @@
 
         .voorbeeld {
             width: 98%;
-            margin: 0 auto;
-            margin: 15px;
+            margin: 0px;
         }
 
         .voorbeeld p {
             width: 90%;
             max-width: 1000px;
-            margin: 0 0;
+            margin: 5px;
             padding: 1px;
+        }
+
+        section {
+            margin-left: 15px;
         }
     </style>
 </head>
 <body>
-    <p>Text-To-Slide documentatie</p>
+    <header>
+        <p><b>Text-To-Slide V1.0.0 documentatie</b></p>
+        <button onclick="document.location='website.html'" class="nav-button">Home</button>
+    </header>
+    <section>
+        <div class="container">
+            <h1>Functionaliteiten</h1>
+            <ul>
+                <li>"#" voor titel op voortitelslide</li>
+                <li>"#" tweede keer gebruik subtitel op voortitelslide</li>
+                <li>"@" Titel van een slide</li>
+                <li>"!" Achtergrondkleur van een slide</li>
+                <li>"\" Gebruik voor een speciaal teken om een zin te beginnen met een speciaal teken</li>
+                <!--<li>[] Tekst tussen haakjes dikgedrukt</li>-->
+                <li>Een zin zonder speciaal teken is een normale zin in de lijst</li>
+            </ul>
 
-    <h1>Functionaliteiten</h1>
-    <ul>
-        <li>"#" voor titel op voortitelslide</li>
-        <li>"#" tweede keer gebruik subtitel op voortitelslide</li>
-        <li>"@" Titel van een slide</li>
-        <li>"!" Achtergrondkleur van een slide</li>
-        <li>"\" Gebruik voor een speciaal teken om een zin te beginnen met een speciaal teken</li>
-        <li>[] Tekst tussen haakjes dikgedrukt</li>
-        <li>Een zin zonder speciaal teken is een normale zin in de lijst</li>
-    </ul>
-
-    <p><b>Elke zin moet eindigen met een punt.</b></p>
-    
-    <h1>Errors + oplossingen</h1>
-    <ul>
-        <h3>"Error: kon de volgende zin niet in presentatie zetten"</h3>
-        <p>Oplossing: Gebruik maximaal 2 keer "#" als speciaal karakter vooraan de zin.</p>
-        <p>.</p>
-        <h3>"Error: kon achtergrondkleur niet bepalen"</h3>
-        <p>Oplossing: Formateer de achtergrondkleur als '!(R, G, B).'. Correct voorbeeld: '!(122, 53, 36).' Getal mag 1 t/m 255 zijn.</p>
-        <p>.</p>
-        <h3>"Error: Achtergrondkleur al gegeven"</h3>
-        <p>Oplossing: Er is al eerder in de presentatie een kleur opgegeven. Zorg dat er maximaal een kleur opgegeven is.</p>
-    </ul>
+            <p><b>Elke zin moet eindigen met een punt.</b></p>
+            
+            <h1>Errors + oplossingen</h1>
+            <ul>
+                <h3>"Error: kon de volgende zin niet in presentatie zetten"</h3>
+                <p>Oplossing: Gebruik maximaal 2 keer "#" als speciaal karakter vooraan de zin.</p>
+                <p>.</p>
+                <h3>"Error: kon achtergrondkleur niet bepalen"</h3>
+                <p>Oplossing: Formateer de achtergrondkleur als '!(R, G, B).'. Correct voorbeeld: '!(122, 53, 36).' Getal mag 1 t/m 255 zijn.</p>
+                <p>.</p>
+                <h3>"Error: Achtergrondkleur al gegeven"</h3>
+                <p>Oplossing: Er is al eerder in de presentatie een kleur opgegeven. Zorg dat er maximaal een kleur opgegeven is.</p>
+            </ul>
 
 
-    <h1>Voorbeeld</h1>
-    <h3><i>Voorbeeld van een tekst die opgegeven kan worden in het programma:</i></h3>
-    <p><i>Deze tekst heeft elke functionaliteit van het programma correct geimplementeerd.</i></p>
+            <h1>Voorbeeld</h1>
+            <h3><i>Voorbeeld van een tekst die opgegeven kan worden in het programma:</i></h3>
+            <p><i>Deze tekst heeft elke functionaliteit van het programma correct geimplementeerd.</i></p>
 
-    <div class="voorbeeld">
-        <P>!(100, 100, 100).</P>
-        <P>#Text-To-Slide.</P>
-        <P>#Door team Text-To-Slide.</P>
-        <P>@Functies:.</P>
-        <P>Tekstbestand naar PowerPoint.</P>
-        <P>Tekst slim uitlezen.</P>
-        <P>PowerPoint met stijlen.</P>
-        <P>@Contact.</P>
-        <P>Gmail: TextToSlide@gmail\.com</P>
-        <P>\@gmail\.nl.</P>
+            <div class="voorbeeld">
+                <P>!(100, 100, 100).</P>
+                <P>#Text-To-Slide.</P>
+                <P>#Door team Text-To-Slide.</P>
+                <P>@Functies:.</P>
+                <P>Tekstbestand naar PowerPoint.</P>
+                <P>Tekst slim uitlezen.</P>
+                <P>PowerPoint met stijlen.</P>
+                <P>@Contact.</P>
+                <P>Gmail: TextToSlide@gmail\.com</P>
+                <P>\@gmail\.nl.</P>
 
-    </div>
-
+            </div>
+        </div>
+    </section>
 </body>
 </html>
