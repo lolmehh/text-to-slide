@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text-To-Slide</title>
+    <link rel="stylesheet" href="stylesheet.css">
     <style>
+        /* CSS specifiek voor home pagina */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -27,33 +29,6 @@
             text-align: center;
         }
 
-        h1 {
-            margin: 0;
-            font-size: 28px;
-        }
-
-        h2 {
-            color: #2c5aa0;
-            border-bottom: 2px solid #2c5aa0;
-            padding-bottom: 5px;
-        }
-
-        .introductie {
-            background-color: white;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .Functionaliteiten {
-            background-color: white;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
         .Functionaliteit-list {
             list-style-type: square;
             padding-left: 20px;
@@ -61,14 +36,6 @@
 
         .Functionaliteit-list li {
             margin-bottom: 10px;
-        }
-
-        .Uitleg {
-            background-color: white;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .stap {
@@ -79,23 +46,7 @@
         }
 
         .download {
-            background-color: white;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             text-align: center;
-        }
-
-        .download-button {
-            display: inline-block;
-            background-color: #2c5aa0;
-            color: white;
-            padding: 12px 25px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            margin-top: 10px;
         }
 
         .download-button:hover {
@@ -110,33 +61,31 @@
             margin-top: 30px;
         }
 
-        .nav-button {
-            display: inline-block;
-            background-color: #2c5aa0;
-            color: white;
-            padding: 12px 25px;
-            text-decoration: none;
-            border-radius: 5px;
-            border: 2px solid #FFFFFF;
+        .stap a {
+            color: #1e3d6f;
             font-weight: bold;
-            transition: none;
-        }
-        
-        .nav-button:hover {
-            background-color: rgba(0, 0, 0, 0.315);
+            cursor: pointer;
         }
 
-        .nav-button:focus,
-        .nav-button:active {
-            outline: none;
-            box-shadow: none;
-            transform: none;
-            background-color: #3b6198;
+        #Tip {
+            border-left: 4px solid #2ca030;
         }
+
+        /* Aanpassingen voor onder de 350px breedt */
+
+        .download-button,
+        .nav-button {
+            @media screen and (max-width: 350px) {
+                margin-top: 4px;
+            }
+        }
+
     </style>
 </head>
 <body>
     <header>
+        <!-- Alle informatie in aparte vakken op de website -->
+        <!-- Header met titel -->
         <div class="container">
             <h1>Text-To-Slide</h1>
             <p>Maak automatisch een PPTX bestand van je tekstbestand.</p>
@@ -148,12 +97,13 @@
     </header>
 
     <div class="container">
+        <!-- Introductie van programma -->
         <div class="introductie">
             <h2>Over het programma</h2>
             <p>Text-To-Slide is een handig Python-programma dat automatisch van een ingevoerd tekstbestand een PPTX bestand maakt. Het programma splitst de tekst op in verschillende dia's en maakt ook een mooie titelpagina.</p>
             <p>Het resultaat wordt automatisch geëxporteerd naar een PPTX bestand en je kan verschillende stijlen toepassen.</p>
         </div>
-
+        <!-- Functionaliteiten van programma -->
         <div class="Functionaliteiten">
             <h2>Wat kan het programma?</h2>
             <ul class="Functionaliteit-list">
@@ -165,7 +115,7 @@
                 <li>Werkt met teksten in elke taal</li>
             </ul>
         </div>
-
+        <!-- Hoe werkt het programma -->
         <div class="Uitleg">
             <h2>Hoe werkt het?</h2>
             <div class="stap">
@@ -184,15 +134,20 @@
                 <h3>Stap 4: Je PowerPoint is klaar voor gebruik</h3>
                 <p>Open de gegenereerde PowerPoint uit je downloadmap en presenteer!</p>
             </div>
+            <div class="stap" id="Tip">
+                <h3>Tip: Lukt het niet?</h3>
+                <p>Bekijk de documentatie voor uitleg door <a onclick="document.location='documentatie.html'">hier</a> te klikken</p>
+            </div>
         </div>
-
+        <!-- Downloadknop -->
         <div class="download">
             <h2>Download het programma</h2>
             <p>Klik op de knop hieronder om Text-To-Slide te downloaden.</p>
-            <a href="#" class="download-button">Download Hier</a>
+            <a href="documentatie.html" class="download-button">Download Hier</a>
         </div>
     </div>
-
+        
+    <!-- Footer -->
     <footer>
         <div class="container">
             <p>Text-To-Slide - Programma gemaakt door team Text-To-Slide</p>
