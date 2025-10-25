@@ -9,6 +9,16 @@ h2 {
     padding-bottom: 5px;
 }
 
+.download, .Uitleg, .introductie, .Fouten, .Errors,
+.Functionaliteiten {
+    background-color: white;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-top: 5px;
+}
+
 .download-button,
 .nav-button {
     display: inline-block;
@@ -32,18 +42,4 @@ h2 {
     box-shadow: none;
     transform: none;
     background-color: #3b6198;
-}
-
-.download,
-.Uitleg,
-.introductie,
-.Fouten,
-.Errors,
-.Functionaliteiten {
-    background-color: white;
-    padding: 20px;
-    margin: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    margin-top: 5px;
 }

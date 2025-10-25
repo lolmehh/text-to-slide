@@ -39,14 +39,6 @@
             font-size: 30px;
         }
 
-        .voorbeeld p {
-            font-family: Fira Code, Arial, sans-serif;
-            width: 90%;
-            max-width: 1000px;
-            margin: 0 0;
-            padding: 1px;
-        }
-
         .sidebar {
             top: 63.69px;
             margin: 0;
@@ -82,6 +74,14 @@
             
         }
 
+        .voorbeeld p {
+            font-family: Fira Code, Arial, sans-serif;
+            width: 90%;
+            max-width: 1000px;
+            margin: 0 0;
+            padding: 1px;
+        }
+
         .voorbeeld {
             width: 25%;
             margin: 0 auto;
@@ -99,7 +99,6 @@
             
         }
         /* Aanpassingen voor onder de 1200px breedt */
-
         .sidebar h1 {
             @media screen and (max-width: 1200px) {
                 font-size: 20px;
@@ -174,20 +173,23 @@
         }
     </style>
 </head>
-<script>
-    function ScrollFunctie(ScrollNaar) {
-    const element = document.getElementById(ScrollNaar);
-    element.scrollIntoView(); 
-    window.scrollBy(0, -80); // scrolt hem nog ietsje hoger zodat hij volledig zichbaar is
-}
-</script>
+    <script>
+        // Scrollt automatisch naar onderwerp op pagina
+        function ScrollFunctie(ScrollNaar) {
+        const element = document.getElementById(ScrollNaar);
+        element.scrollIntoView(); 
+        window.scrollBy(0, -80); // scrolt hem nog ietsje hoger zodat hij volledig zichbaar is
+    }
+    </script>
 <body>
     <header>
+        <!-- Soort navigatiebalk bovenaan pagina -->
         <p><b>Text-To-Slide V1.0.0 documentatie</b></p>
         <button onclick="document.location='website.html'" class="nav-button">Home</button>
     </header>
 
     <aside>
+        <!-- Inhoudsopgave aan de zijkant van de pagina -->
         <div class="sidebar">
             <h1>Inhoud</h1>
             <h3><a onclick="ScrollFunctie('ScrollFuncties')">Functionaliteiten</a></h3>
@@ -200,7 +202,10 @@
 
 
     <section>
+        <!-- Alle informatie in aparte vakken op de website -->
+         
         <div class="container">
+            <!--Functionaliteiten van programma -->
             <div class="Functionaliteiten" id="ScrollFuncties">
                 <h1>Functionaliteiten</h1>
                 <ul>
@@ -215,7 +220,7 @@
 
                 <p><b>Elke zin moet eindigen met een punt.</b></p>
             </div>
-
+            <!-- Errors + oplossing -->
             <div class="Errors" id="ScrollErrors">
             <h1>Errors + oplossingen</h1>
                 <ul>
@@ -228,9 +233,10 @@
                 </ul>
             </div>
 
+            <!-- Veelgemaakte fouten -->
             <div class="Fouten" id="ScrollFouten">
-            <h1>Veelgemaakte fouten</h1>
-            <p>Als je niet het resultaat krijgt dat je had verwacht kan er wat mis zijn gegaan bij je tekstbestand. Ga het volgende stappenplan langs om foutjes uit je tekstbestand te halen.</p>
+                <h1>Veelgemaakte fouten</h1>
+                <p>Als je niet het resultaat krijgt dat je had verwacht kan er wat mis zijn gegaan bij je tekstbestand. Ga het volgende stappenplan langs om foutjes uit je tekstbestand te halen.</p>
                 <ol>
                     <li><p>Controleer of elke zin eindigt met een punt.</p></li>
                     <li><p>Controleer of je niet meer dan een keer een kleur hebt opgegeven.</p></li>
@@ -240,8 +246,8 @@
                 </ol>
             </div>
 
-
-            <div class="Errors" id="ScrollVoorbeeld">
+            <!-- Voorbeeld van een correct tekst om te importeren -->
+            <div class="Errors" id="ScrollVoorbeeld"> <!-- Gebruik ERROR class omdat het hetzelfde eruit moet zien -->
                 <h1>Voorbeeld</h1>
                 <h3><i>Voorbeeld van een tekst die opgegeven kan worden in het programma:</i></h3>
                 <p><i>Deze tekst heeft elke functionaliteit van het programma correct geimplementeerd.</i></p>
