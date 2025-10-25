@@ -249,10 +249,40 @@ while is_running:
 
                                 for zin in zinnen[1:]:
                                     p = text_frame.add_paragraph()
+
+                                    '''
+                                    SOURCE: ChatGPT
+                                    PROMPT: how do i get the characters between the brackets
+                                    
+                                    re import and how it works in this case
+                                    '''
+
                                     for between_brackets in re.split(r'(\[.*?\])', zin):    #re is a weird import, unable to explain ¯\_(ツ)_/¯
                                         run = p.add_run()
                                         if between_brackets.startswith("[") and between_brackets.endswith("]"):
                                             run.text = between_brackets[1:-1]  # removes the brackets
+                                            run.font.bold = True
+                                        else:
+                                            run.text = between_brackets
+
+                                    title.text = ""
+                                    p = title.text_frame.add_paragraph()  # new paragraph
+
+                                    for between_brackets in re.split(r'(\[.*?\])', zinnen[0]): #copying code for titles
+                                        run = p.add_run()
+                                        if between_brackets.startswith("[") and between_brackets.endswith("]"):
+                                            run.text = between_brackets[1:-1]
+                                            run.font.bold = True
+                                        else:
+                                            run.text = between_brackets
+
+                                    #subtitle.text = ""
+                                    #p = subtitle.text_frame.add_paragraph()
+
+                                    for between_brackets in re.split(r'(\[.*?\])', "\n".join(zinnen[1:])): #copying code for subtitles + unexplainable re behaviour.
+                                        run = p.add_run()
+                                        if between_brackets.startswith("[") and between_brackets.endswith("]"):
+                                            run.text = between_brackets[1:-1]
                                             run.font.bold = True
                                         else:
                                             run.text = between_brackets
