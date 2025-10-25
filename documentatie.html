@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -94,6 +94,7 @@
             margin: 20px;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-top: 5px;
 
             @media screen and (max-width: 400px) {
                 padding: 10px;
@@ -188,7 +189,7 @@
             
         }
         
-        .sidebar :hover {
+        .sidebar a:hover {
             cursor: pointer;
             color: #3b6198;
         }
@@ -203,6 +204,15 @@
             @media screen and (max-width: 900px) {
                 font-size: 10px;
                 margin-left: 5px;
+            }
+        }
+
+        .sidebar h1 {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            font-size: 30px;
+            @media screen and (max-width: 1200px) {
+                font-size: 20px;
             }
         }
 
@@ -230,6 +240,7 @@
 
     <aside>
         <div class="sidebar">
+            <h1>Inhoud</h1>
             <h3><a onclick="ScrollFunctie('ScrollFuncties')">Functionaliteiten</a></h3>
             <h3><a onclick="ScrollFunctie('ScrollErrors')">Errors + oplossingen</a></h3>
             <h3><a onclick="ScrollFunctie('ScrollFouten')">Veelgemaakte fouten</a></h3>
