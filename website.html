@@ -115,6 +115,30 @@
             color: #666;
             margin-top: 10px;
         }
+
+        .nav-button {
+            display: inline-block;
+            background-color: #2c5aa0;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            border: 2px solid #FFFFFF;
+            font-weight: bold;
+            transition: none;
+        }
+        
+        .nav-button:hover {
+            background-color: rgba(0, 0, 0, 0.315);
+        }
+
+        .nav-button:focus,
+        .nav-button:active {
+            outline: none;
+            box-shadow: none;
+            transform: none;
+            background-color: #3b6198;
+        }
     </style>
 </head>
 <body>
@@ -122,6 +146,10 @@
         <div class="container">
             <h1>Text-To-Slide</h1>
             <p>Maak automatisch een PPTX bestand van je tekstbestand.</p>
+            <div>
+                <button onclick="document.location='website.html'" class="nav-button">Download tool</button>
+                <button onclick="document.location='documentatie.html'" class="nav-button">Documentatie</button>
+            </div>
         </div>
     </header>
 

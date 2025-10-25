@@ -9,6 +9,9 @@
         h1 {
             margin: 0;
             font-size: 28px;
+            @media screen and (max-width: 400px) {
+                font-size: 18px;
+            }
         }
 
         h2 {
@@ -60,8 +63,8 @@
         }
 
         .nav-button {
-            @media screen and (max-width: 800px) {
-                margin-left: 15px;
+            @media screen and (max-width: 1200px) {
+                margin-right: 15px;
             }
         }
         
@@ -72,6 +75,10 @@
             padding: 0px;
             background-color: #f0f0f0;
             color: #333;
+
+            @media screen and (max-width: 700px) {
+                font-size: 10px;
+            }
         }
 
 
@@ -87,6 +94,22 @@
             margin: 20px;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+            @media screen and (max-width: 400px) {
+                padding: 10px;
+            }
+        }
+
+        .Fouten {
+            background-color: white;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+            @media screen and (max-width: 400px) {
+                padding: 10px;
+            }
         }
 
         .Errors {
@@ -95,6 +118,10 @@
             margin: 20px;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+            @media screen and (max-width: 400px) {
+                padding: 10px;
+            }
         }
 
         .Errors ul {
@@ -146,7 +173,7 @@
         }
 
         .sidebar {
-            top: 63px;
+            top: 63.69px;
             margin: 0;
             padding: 0;
             width: 20%;
@@ -155,6 +182,10 @@
             height: 100%;
             overflow: auto;
             box-shadow: 0.01cm 0px;
+            @media screen and (max-width: 1200px) {
+                font-size: 12px;
+            }
+            
         }
         
         .sidebar :hover {
@@ -168,6 +199,18 @@
         .sidebar h2,
         .sidebar h3 {
             margin-left: 15px;
+
+            @media screen and (max-width: 900px) {
+                font-size: 10px;
+                margin-left: 5px;
+            }
+        }
+
+        .sidebar a {
+            @media screen and (max-width: 600px) {
+                font-size: 7px;
+                margin-left: 5px;
+            }
         }
 
     </style>
@@ -225,17 +268,16 @@
                 </ul>
             </div>
 
-            <div class="Errors" id="ScrollFouten">
+            <div class="Fouten" id="ScrollFouten">
             <h1>Veelgemaakte fouten</h1>
             <p>Als je niet het resultaat krijgt dat je had verwacht kan er wat mis zijn gegaan bij je tekstbestand. Ga het volgende stappenplan langs om foutjes uit je tekstbestand te halen.</p>
-                <ul>
-                    <h3>"Error: kon de volgende zin niet in presentatie zetten"</h3>
-                    <p>Oplossing: Gebruik maximaal 2 keer "#" als speciaal karakter vooraan de zin.</p>
-                    <h3>"Error: kon achtergrondkleur niet bepalen"</h3>
-                    <p>Oplossing: Formateer de achtergrondkleur als '!(R, G, B).'. Correct voorbeeld: '!(122, 53, 36).' Getal mag 1 t/m 255 zijn.</p>
-                    <h3>"Error: Achtergrondkleur al gegeven"</h3>
-                    <p>Oplossing: Er is al eerder in de presentatie een kleur opgegeven. Zorg dat er maximaal een kleur opgegeven is.</p>
-                </ul>
+                <ol>
+                    <li><p>Controleer of elke zin eindigt met een punt.</p></li>
+                    <li><p>Controleer of je niet meer dan een keer een kleur hebt opgegeven.</p></li>
+                    <li><p>Controleer of je je kleur correct hebt geformateerd.</p></li>
+                    <li><p>Controleer of er voor speciale karakters een backslash "\" staat.</p></li>
+                    <li><p>Controleer of je niet meer dan twee hashtags "#" als speciaal teken gebruikt.</p></li>
+                </ol>
             </div>
 
 
