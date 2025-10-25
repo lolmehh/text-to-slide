@@ -1,5 +1,6 @@
 import pygame
 import pygame_gui
+import re
 from pptx.util import Pt
 import tkinter as tk
 from tkinter import filedialog
@@ -12,6 +13,8 @@ from pptx import Presentation
 import os
 
 global textbox, titel_error_weergeven
+
+achtergrondkleur = []
 
 pygame.init()
 
@@ -98,7 +101,7 @@ while is_running:
                     def bestandlezen(bestand):
                         global titel_error_weergeven, kleur_error_woordgeving_weergeven, kleur_gekozen_error_weergeven, kleur_gekozen
 
-                        achtergrondkleur = RGBColor(255, 255, 255)
+                        #achtergrondkleur[] = RGBColor(255, 255, 255)
 
                         with open(bestand, "r") as f:
                             text = f.read()
@@ -154,7 +157,7 @@ while is_running:
                                 zin = zin[1:] #haalt @ weg uit presentatie
                                 slidelijsten[slidenummer] = [zin] 
 
-                            elif zin.startswith("!"):
+                            if zin.startswith("!"):
 
                                         
                                 zin = zin[1:]  # haalt ! weg
@@ -171,7 +174,7 @@ while is_running:
                                     # alleen achtergrondkleur selecteren als er geen errors waren bij kleurselecties om onverwachte uitkomsten stoppen.
                                     if kleur_error_woordgeving_weergeven == False or kleur_gekozen_error_weergeven == False:
                                         rgb_tuple = tuple(map(int, zin.strip("() ").split(",")))
-                                        achtergrondkleur = RGBColor(*rgb_tuple)
+                                        achtergrondkleur.append = RGBColor(*rgb_tuple)
                                         kleur_gekozen = True
                                 except Exception as e:
                                     if kleur_error_woordgeving_weergeven == False:
@@ -201,14 +204,6 @@ while is_running:
                                     slidelijsten[slidenummer] = []
                                 slidelijsten[slidenummer].append(zin)
 
-                            #positieHaakjeOpen = zin.find("[")   #gets the position from [ and ]. if none it will output -1
-                            #positieHaakjeDicht = zin.find("]")
-                            #if positieHaakjeOpen >= 0:  #checks if [ was found
-                            #    for i in zin[positieHaakjeOpen:positieHaakjeDicht]: #makes characters between teh brackets bold
-                            #        character = ???.add_paragraph()     #according to the guide i must add something that resembles text box in ???. idk what variable you used
-                            #        character.text = i
-                            #        character.font.bold = True
-
                         prs = Presentation()
 
                         def titelslideophalen():
@@ -219,42 +214,52 @@ while is_running:
                             slide = prs.slides.add_slide(slide_layout)
                             title = slide.shapes.title
                             subtitle = slide.placeholders[1]
-                            
+
                             background = slide.background
                             fill = background.fill
                             fill.solid()
-                            fill.fore_color.rgb = achtergrondkleur
+                            #fill.fore_color.rgb = achtergrondkleur[0]
 
                             title.text = slidelijsten[0][0]
                             subtitle.text = "\n".join(slidelijsten[0][1:]).strip()
 
                         # Maak de inhoudslides
                         def inhoudslides():
-                            for nummer, zinnen in slidelijsten.items():  # 
+                            for nummer, zinnen in slidelijsten.items():
+
                                 if nummer == 0: #sla de gegevens van de titelslide over
                                     continue
 
+                                #maakt slide
                                 slide_layout = prs.slide_layouts[1]  # De layout (van de library) voor "Titel en inhoud"
                                 slide = prs.slides.add_slide(slide_layout)
 
                                 background = slide.background
                                 fill = background.fill
                                 fill.solid()
+                                #for slidekleur in achtergrondkleur:
+                                #    print(slidekleur)
+                                #    print(achtergrondkleur)
+                                #    #fill.fore_color.rgb = slidekleur
                                 fill.fore_color.rgb = achtergrondkleur
 
                                 title = slide.shapes.title
                                 content = slide.placeholders[1]
+                                text_frame = content.text_frame
 
-                                
+                                for zin in zinnen[1:]:
+                                    p = text_frame.add_paragraph()
+                                    for between_brackets in re.split(r'(\[.*?\])', zin):    #re is a weird import, unable to explain ¯\_(ツ)_/¯
+                                        run = p.add_run()
+                                        if between_brackets.startswith("[") and between_brackets.endswith("]"):
+                                            run.text = between_brackets[1:-1]  # removes the brackets
+                                            run.font.bold = True
+                                        else:
+                                            run.text = between_brackets
 
                                 # Dit is voor de eerste zin in de list
                                 if len(zinnen) > 0:
                                     title.text = zinnen[0].strip()
-
-                                # dit is voor de rest van de zinnen in de list
-                                if len(zinnen) > 1:
-                                    inhoud = "\n".join(zinnen[1:]).strip()
-                                    content.text = inhoud
 
                         def bestandopslaan():
                             PPTXnaam = bestandnaamvak.get_text()
