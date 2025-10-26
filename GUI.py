@@ -6,10 +6,10 @@ import tkinter as tk
 from tkinter import filedialog
 from pptx import Presentation
 from pptx.dml.color import RGBColor
+from pptx.util import Inches
 import re
 #from uitlezen import bestandlezen
 
-from pptx import Presentation
 import os
 
 global textbox, titel_error_weergeven
@@ -100,8 +100,10 @@ while is_running:
                 if bestand:
                     def bestandlezen(bestand):
                         global titel_error_weergeven, kleur_error_woordgeving_weergeven, kleur_gekozen_error_weergeven, kleur_gekozen
-
+                        afbeeldingen_per_slide = {}
                         #achtergrondkleur[] = RGBColor(255, 255, 255)
+
+                        afbeeling_in_slide = True
 
                         with open(bestand, "r") as f:
                             text = f.read()
@@ -157,7 +159,7 @@ while is_running:
                                 zin = zin[1:] #haalt @ weg uit presentatie
                                 slidelijsten[slidenummer] = [zin] 
 
-                            if zin.startswith("!"):
+                            elif zin.startswith("!"):
 
                                         
                                 zin = zin[1:]  # haalt ! weg
@@ -196,6 +198,44 @@ while is_running:
                                         )
                                         add_to_log(log_tekst)
                                         kleur_gekozen_error_weergeven = True
+
+                            elif zin.startswith(">"):
+                                zin = zin[1:]
+                                onderdelen = [deel.strip() for deel in zin.split(",")]
+
+                                bestandsnaam = onderdelen[0]
+                                x = float(onderdelen[1]) if len(onderdelen) > 1 else 1.0 # Haalt x, y, breedte en hoogte op uit gegeven tekstbestand en Controleert of x is gegeven anders is waarde 1.0
+                                y = float(onderdelen[2]) if len(onderdelen) > 2 else 1.0    
+                                breedte = float(onderdelen[3]) if len(onderdelen) > 3 else None
+                                hoogte = float(onderdelen[4]) if len(onderdelen) > 4 else 3.0
+
+                                afbeelding_gevonden = False  # bijhouden of afbeelding is gevonden
+
+                                afbeeldingen_map = os.path.join(os.path.dirname(__file__), "afbeeldingen") #Zoek het bestand in het afbeeldingenmapje
+                                for bestand in os.listdir(afbeeldingen_map):
+                                    if bestandsnaam.lower() in bestand.lower():
+                                        slide_afbeelding = os.path.join(afbeeldingen_map, bestand)
+                                        print(f"Gevonden bestand: {slide_afbeelding}")
+
+                                        # alle gevens voor afbeelding op een slide
+                                        afbeeldingen_per_slide[slidenummer] = {
+                                            "pad": slide_afbeelding,
+                                            "x": x,
+                                            "y": y,
+                                            "breedte": breedte,
+                                            "hoogte": hoogte
+                                        }
+
+                                        afbeelding_gevonden = True
+                                        break  # Afbeelding gevonden dus loopje stoppen
+                                    
+                                if not afbeelding_gevonden:
+                                    log_tekst = (
+                                            f"<font size=5><b><font color='#ff0000'>Error: Kon {bestandsnaam} niet vinden:</font></b> <i>'{zin}'</i> </font>"
+                                            f"<font size=5><b><font color='#11ff00'>Oplossing:</font></b> Geef een correcte afbeelding op uit het afbeeldingmapje. '</font>"
+                                            f"<font size=5><b><font color='#335fff'>De afbeelding is niet weergeven. </font>"
+                                        )
+                                    add_to_log(log_tekst)
 
                             else:
                                 if slidenummer not in slidelijsten:
@@ -247,6 +287,17 @@ while is_running:
                                 content = slide.placeholders[1]
                                 text_frame = content.text_frame
 
+                                # Afbeelding toevoegen
+                                if nummer in afbeeldingen_per_slide:
+                                    info = afbeeldingen_per_slide[nummer] # Eerder opgehaalde informatie wordt nu bij de correcte slide en afbeelding gezet voor in presentatie
+                                    pad = info["pad"]
+                                    x = Inches(info["x"]) #als x en y niet aanwezig is wordt het automatisch 1.0
+                                    y = Inches(info["y"])
+                                    breedte = Inches(info["breedte"]) if info["breedte"] else None #Als hoogte en breedte niet aanwezig is wordt het automatisch bepaalt
+                                    hoogte = Inches(info["hoogte"]) if info["hoogte"] else None
+
+                                    slide.shapes.add_picture(pad, x, y, width=breedte, height=hoogte)
+                                    
                                 for zin in zinnen[1:]:
                                     p = text_frame.add_paragraph()
                                     for between_brackets in re.split(r'(\[.*?\])', zin):    #re is a weird import, unable to explain ¯\_(ツ)_/¯
