@@ -1,0 +1,15 @@
+-------------------------------------
+Bronnen
+-------------------------------------
+
+Github (public)
+- https://github.com/lolmehh/text-to-slide (als deze link niet werkt moet je even een mailtje sturen naar Maurits)
+PPTX library documentation
+- https://python-pptx.readthedocs.io/en/latest/index.html
+Pygame Documentation
+- https://www.pygame.org/docs
+Pygame GUI documentation
+- https://pygame-gui.readthedocs.io/en/latest
+Trello
+- https://trello.com/b/RK1y2RSJ/text-to-slide-sytem
+Andere bronnen kunnen ook nog in de code staan
