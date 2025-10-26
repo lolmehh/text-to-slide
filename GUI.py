@@ -223,7 +223,6 @@ while is_running:
                                 zin = zin.replace("{Vervangende_Hashtag}", "#")
                                 zin = zin.replace("{Vervangende_Apenstaart}", "@")
                                 zin = zin.replace("{Vervangende_Punt}", ".")
-
                                 slidelijsten[slidenummer].append(zin)
 
                                                     
@@ -252,6 +251,7 @@ while is_running:
                             p_title = title.text_frame.paragraphs[0]
                             p_title.clear()  # Verwijder eventuele standaardtekst
 
+                            #dikgedrukte tekst -> zie bron  in def inhoudslides()
                             for between_brackets in re.split(r'(\[.*?\])', slidelijsten[0][0]):
                                 run = p_title.add_run()
                                 if between_brackets.startswith("[") and between_brackets.endswith("]"):
@@ -266,12 +266,18 @@ while is_running:
 
                             for zin in slidelijsten[0][1:]:
                                 p_sub = text_frame_sub.add_paragraph()
-                                for between_brackets in re.split(r'(\[.*?\])', zin):
+                                for between_brackets in re.split(r'(\[.*?\]|\{.*?\}|\|\|.*?\|\|)', zin):    #re is a weird import, unable to explain ¯\_(ツ)_/¯
                                     run = p_sub.add_run()
                                     if between_brackets.startswith("[") and between_brackets.endswith("]"):
+                                        run.text = between_brackets[1:-1]  # removes the brackets
+                                        run.font.bold = True    #dikgedrukte tekst
+                                    elif between_brackets.startswith("{") and between_brackets.endswith("}"):
                                         run.text = between_brackets[1:-1]
-                                        run.font.bold = True
-                                    else:
+                                        run.font.italic = True  #scheefgedrukte tekst
+                                    elif between_brackets.startswith("||") and between_brackets.endswith("||"):
+                                        run.text = between_brackets[2:-2]
+                                        run.font.underline = True   #onde tekst
+                                    else:                                   #will just print the text if tehre is no closing bracket
                                         run.text = between_brackets
 
                         # Maak de inhoudslides
@@ -319,26 +325,39 @@ while is_running:
                                     re import and how it works in this case
                                     '''
 
-                                    for between_brackets in re.split(r'(\[.*?\])', zin):    #re is a weird import, unable to explain ¯\_(ツ)_/¯
+                                    for between_brackets in re.split(r'(\[.*?\]|\{.*?\}|\|\|.*?\|\|)', zin):    #re is a weird import, unable to explain ¯\_(ツ)_/¯
                                         run = p_text.add_run()
                                         if between_brackets.startswith("[") and between_brackets.endswith("]"):
                                             run.text = between_brackets[1:-1]  # removes the brackets
-                                            run.font.bold = True
+                                            run.font.bold = True    #dikgedrukte tekst
+                                        elif between_brackets.startswith("{") and between_brackets.endswith("}"):
+                                            run.text = between_brackets[1:-1]
+                                            run.font.italic = True  #scheefgedrukte tekst
+                                        elif between_brackets.startswith("||") and between_brackets.endswith("||"):
+                                            run.text = between_brackets[2:-2]
+                                            run.font.underline = True   #onde tekst
                                         else:                                   #will just print the text if tehre is no closing bracket
                                             run.text = between_brackets
+
+
 
                                 title = slide.shapes.title
                                 p_title = title.text_frame.paragraphs[0]
                                 p_title.clear()
 
-                                for between_brackets in re.split(r'(\[.*?\])', zinnen[0]): #copying code for titles
+                                for between_brackets in re.split(r'(\[.*?\]|\{.*?\}|\|\|.*?\|\|)', zinnen[0]):    #re is a weird import, unable to explain ¯\_(ツ)_/¯
                                     run = p_title.add_run()
                                     if between_brackets.startswith("[") and between_brackets.endswith("]"):
+                                        run.text = between_brackets[1:-1]  # removes the brackets
+                                        run.font.bold = True    #dikgedrukte tekst
+                                    elif between_brackets.startswith("{") and between_brackets.endswith("}"):
                                         run.text = between_brackets[1:-1]
-                                        run.font.bold = True
-                                    else:
+                                        run.font.italic = True  #scheefgedrukte tekst
+                                    elif between_brackets.startswith("||") and between_brackets.endswith("||"):
+                                        run.text = between_brackets[2:-2]
+                                        run.font.underline = True   #onderdrukte tekst
+                                    else:                                   #will just print the text if tehre is no closing bracket
                                         run.text = between_brackets
-
 
                         def bestandopslaan():
                             PPTXnaam = bestandnaamvak.get_text()
