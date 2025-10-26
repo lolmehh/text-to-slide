@@ -239,6 +239,8 @@ while is_running:
                             title = slide.shapes.title
                             subtitle = slide.placeholders[1]
 
+                            
+
                             #Achtergrondkleur
                             background = slide.background
                             fill = background.fill
@@ -246,8 +248,31 @@ while is_running:
                             #Achtergrondkleur van titelslide (opgegeven kleur anders wit)
                             fill.fore_color.rgb = achtergrondkleur.get(0, RGBColor(255, 255, 255))
 
-                            title.text = slidelijsten[0][0]
-                            subtitle.text = "\n".join(slidelijsten[0][1:]).strip()
+                            # Titel
+                            p_title = title.text_frame.paragraphs[0]
+                            p_title.clear()  # Verwijder eventuele standaardtekst
+
+                            for between_brackets in re.split(r'(\[.*?\])', slidelijsten[0][0]):
+                                run = p_title.add_run()
+                                if between_brackets.startswith("[") and between_brackets.endswith("]"):
+                                    run.text = between_brackets[1:-1]  # verwijder de blokhaken
+                                    run.font.bold = True
+                                else:
+                                    run.text = between_brackets
+
+                            # Subtitel
+                            subtitle.text = ""  # leegmaken
+                            text_frame_sub = subtitle.text_frame
+
+                            for zin in slidelijsten[0][1:]:
+                                p_sub = text_frame_sub.add_paragraph()
+                                for between_brackets in re.split(r'(\[.*?\])', zin):
+                                    run = p_sub.add_run()
+                                    if between_brackets.startswith("[") and between_brackets.endswith("]"):
+                                        run.text = between_brackets[1:-1]
+                                        run.font.bold = True
+                                    else:
+                                        run.text = between_brackets
 
                         # Maak de inhoudslides
                         def inhoudslides():
