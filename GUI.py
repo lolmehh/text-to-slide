@@ -283,6 +283,7 @@ while is_running:
                                 #    #fill.fore_color.rgb = slidekleur
                                 fill.fore_color.rgb = achtergrondkleur
 
+                                #defining variables
                                 title = slide.shapes.title
                                 content = slide.placeholders[1]
                                 text_frame = content.text_frame
@@ -299,18 +300,35 @@ while is_running:
                                     slide.shapes.add_picture(pad, x, y, width=breedte, height=hoogte)
                                     
                                 for zin in zinnen[1:]:
-                                    p = text_frame.add_paragraph()
+                                    p_text = text_frame.add_paragraph()
+
+                                    '''
+                                    SOURCE: ChatGPT
+                                    PROMPT: how do i get the characters between the brackets
+                                    
+                                    re import and how it works in this case
+                                    '''
+
                                     for between_brackets in re.split(r'(\[.*?\])', zin):    #re is a weird import, unable to explain ¯\_(ツ)_/¯
-                                        run = p.add_run()
+                                        run = p_text.add_run()
                                         if between_brackets.startswith("[") and between_brackets.endswith("]"):
                                             run.text = between_brackets[1:-1]  # removes the brackets
                                             run.font.bold = True
-                                        else:
+                                        else:                                   #will just print the text if tehre is no closing bracket
                                             run.text = between_brackets
 
-                                # Dit is voor de eerste zin in de list
-                                if len(zinnen) > 0:
-                                    title.text = zinnen[0].strip()
+                                title = slide.shapes.title
+                                p_title = title.text_frame.paragraphs[0]
+                                p_title.clear()
+
+                                for between_brackets in re.split(r'(\[.*?\])', zinnen[0]): #copying code for titles
+                                    run = p_title.add_run()
+                                    if between_brackets.startswith("[") and between_brackets.endswith("]"):
+                                        run.text = between_brackets[1:-1]
+                                        run.font.bold = True
+                                    else:
+                                        run.text = between_brackets
+
 
                         def bestandopslaan():
                             PPTXnaam = bestandnaamvak.get_text()
