@@ -115,43 +115,29 @@ while is_running:
 
                         for zin in allezinnen:
                             zin = zin.strip()
-                            zin = zin.replace('\\.', '.').replace('\\@', '@').replace('\\#', '#')
 
+                            # Tijdelijke vervangingen zodat escaped tekens niet als commando gezien worden
+                            zin = zin.replace("\\#", "{Vervangende_Hashtag}")
+                            zin = zin.replace("\\@", "{Vervangende_Apenstaart}")
+                            zin = zin.replace("\\.", "{Vervangende_Punt}")
 
-                            print(zin)
-                            if zin.startswith("\\"):
-                                if zin.startswith("\\@"):
-                                    print("Nu doet hij het wel")
-                                if zin.startswith("\\#"):
-                                    # overslaan
-                                    print("Hij slaat over")
-                                else:
-                                    if slidenummer == 0:
-                                        slidenummer = 1
-                                    if slidenummer not in slidelijsten:
-                                        slidelijsten[slidenummer] = []
-                                    zin = zin[1:]  # haalt \ weg uit presentatie
-                                    slidelijsten[slidenummer].append(zin)
-
-                            elif zin.startswith("#"):
+                            # Logisch bepalen wat voor type zin het is
+                            if zin.startswith("#"):
+                                # Titel of subtitel
                                 zin = zin[1:]
-                                if 0 in slidelijsten and slidelijsten[0] is not None:
-                                    #de voorpagina mag maar twee zinnen krijgen dus als die meer dan dat krijgt wordt dat niet toegevoegd
-                                    #en wordt er een error gegeven. en dat maar een keer vanwege de titel_error_weergeven variabel 
-                                    if len(slidelijsten[0]) < 2:
-                                        slidelijsten[0].append(zin)
-                                    elif len(slidelijsten[0]) >= 2:
-                                        if titel_error_weergeven == False:
-                                            log_tekst = (
-                                                f"<font size=5><b><font color='#ff0000'>Error: kon de volgende zin niet in presentatie zetten:</font></b> <i>'{zin}'</i> </font>"
-                                                f"<font size=5><b><font color='#11ff00'>Oplossing:</font></b> Er mogen maximaal twee (sub)titelzinnen worden opgegeven (zinnen die beginnen met #). '</font>"
-                                                f"<font size=5><b><font color='#335fff'>De presentatie is zonder deze zin(nen). </font>"
-                                            )
-                                            add_to_log(log_tekst)
-                                            titel_error_weergeven = True
-                                else:
+                                if 0 not in slidelijsten:
                                     slidelijsten[0] = []
+                                if len(slidelijsten[0]) < 2:
                                     slidelijsten[0].append(zin)
+                                else:
+                                    if not titel_error_weergeven:
+                                        log_tekst = (
+                                            f"<font size=5><b><font color='#ff0000'>Error:</font></b> Te veel titelzinnen opgegeven: <i>'{zin}'</i><br>"
+                                            f"<font color='#11ff00'>Oplossing:</font> Maximaal twee titelzinnen (#) toegestaan.<br>"
+                                            f"<font color='#335fff'>Deze zin is overgeslagen.</font>"
+                                        )
+                                        add_to_log(log_tekst)
+                                        titel_error_weergeven = True
 
                                 
                             elif zin.startswith("@"):
@@ -238,11 +224,21 @@ while is_running:
                                     add_to_log(log_tekst)
 
                             else:
+                                # Gewone tekstzin
                                 if slidenummer not in slidelijsten:
-                                    #als de eerste zin(nen) geen @ of # hebben
                                     slidenummer = 1
                                     slidelijsten[slidenummer] = []
+
+                                
+                                zin = zin.replace("\\", "")
+                                # Zet de placeholders
+                                zin = zin.replace("{Vervangende_Hashtag}", "#")
+                                zin = zin.replace("{Vervangende_Apenstaart}", "@")
+                                zin = zin.replace("{Vervangende_Punt}", ".")
+
                                 slidelijsten[slidenummer].append(zin)
+
+                                                    
 
                         prs = Presentation()
 
