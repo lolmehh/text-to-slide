@@ -3,7 +3,9 @@ Software benodigdheden
 -------------------------------------
 
 Ons programma is ingeleverd als .py dus er hoeft niks extra's geinstalleerd te worden
-Onze website kan lokaal gerund worden of via de link: ... Hier is alleen een browser voor nodig.
+Het lukte niet om een .exe te maken
+
+Onze website kan lokaal gerund worden. Hier is alleen een browser voor nodig.
 
 Als ons programma is ingeleverd als python bestand heeft u nodig:
 Python 3.10.11
@@ -30,6 +32,44 @@ Programma uitvoeren
 
 - Rechtermuisknop op website.html -> open met je browser naar keuze
 - Open de documentatie voor exacte uitleg van werking programma
+
+-------------------------------------
+Productomschrijving
+-------------------------------------
+Dit is de productomschrijving uit de eindpresentatie
+text-to-slide\afbeeldingen\Gebruiksafbeelding.png
+text-to-slide\afbeeldingen\HowToStart.mkv
+
+Dit hebben we gerealiseerd, Deze presentatie is gemaakt met ons programma.
+We hebben een werkend desktopprogramma gemaakt met de API's Pygame en pygame_gui.
+Het programma leest een tekstbestand regel voor regel en zet het om naar PowerPoint-slides.
+Speciale tekens bepalen wat titels, kleuren of afbeeldingen worden.
+We hebben foutmeldingen toegevoegd die uitleggen wat er misgaat en hoe je het oplost.
+We hebben ook een website gemaakt met uitleg en downloadlink.
+
+-------------------------------------
+beoordelingscriteria
+-------------------------------------
+
+- Website
+- Programmeren
+- User Experience
+
+-------------------------------------
+Bronnen
+-------------------------------------
+
+Github (public)
+- https://github.com/lolmehh/text-to-slide (als deze link niet werkt moet je even een mailtje sturen naar Maurits)
+PPTX library documentation
+- https://python-pptx.readthedocs.io/en/latest/index.html
+Pygame Documentation
+- https://www.pygame.org/docs
+Pygame GUI documentation
+- https://pygame-gui.readthedocs.io/en/latest
+Trello
+- https://trello.com/b/RK1y2RSJ/text-to-slide-sytem
+Andere bronnen kunnen ook nog in de code staan
 
 -------------------------------------
 User Experience (UX) beoordelingscriteria
