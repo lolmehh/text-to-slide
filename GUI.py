@@ -14,7 +14,7 @@ import os
 
 global textbox, titel_error_weergeven
 
-achtergrondkleur = []
+achtergrondkleur = {}
 
 pygame.init()
 
@@ -117,10 +117,12 @@ while is_running:
                             zin = zin.strip()
 
                             # Tijdelijke vervangingen zodat escaped tekens niet als commando gezien worden
+                            zin = zin.replace("\\>", "{Vervangende_Pijlrechts}")
+                            zin = zin.replace("\\!", "{Vervangende_Uitroepteken}")
                             zin = zin.replace("\\#", "{Vervangende_Hashtag}")
                             zin = zin.replace("\\@", "{Vervangende_Apenstaart}")
                             zin = zin.replace("\\.", "{Vervangende_Punt}")
-
+                            print(zin)
                             # Logisch bepalen wat voor type zin het is
                             if zin.startswith("#"):
                                 # Titel of subtitel
@@ -145,9 +147,7 @@ while is_running:
                                 zin = zin[1:] #haalt @ weg uit presentatie
                                 slidelijsten[slidenummer] = [zin] 
 
-                            elif zin.startswith("!"):
-
-                                        
+                            elif zin.startswith("!"):       
                                 zin = zin[1:]  # haalt ! weg
                                 # BRON: ChatGPT
                                 # PROMPT: Leg uit waarom achtergrondkleur = "RGBColor(53, 75, 32) niet werkt"
@@ -157,33 +157,19 @@ while is_running:
                                 
                                 # Dit splits de gegeven kleurencodes in de R, G en de B. Benoemt het variabel en controleert of de kleurcode niet foutief is. 
                                 # Als foutief achtergrondkleur = wit
-
+                                # haal uitroepteken weg en trim spaties
                                 try:
-                                    # alleen achtergrondkleur selecteren als er geen errors waren bij kleurselecties om onverwachte uitkomsten stoppen.
-                                    if kleur_error_woordgeving_weergeven == False or kleur_gekozen_error_weergeven == False:
-                                        rgb_tuple = tuple(map(int, zin.strip("() ").split(",")))
-                                        achtergrondkleur.append = RGBColor(*rgb_tuple)
-                                        kleur_gekozen = True
+                                    rgb_text = zin.strip("!(). ")
+                                    r, g, b = map(int, rgb_text.split(","))
+                                    achtergrondkleur[slidenummer] = RGBColor(r, g, b)
                                 except Exception as e:
-                                    if kleur_error_woordgeving_weergeven == False:
-                                            log_tekst = (
+                                    achtergrondkleur[slidenummer] = RGBColor(255, 255, 255)
+                                    log_tekst = (
                                                 f"<font size=5><b><font color='#ff0000'>Error: kon achtergrondkleur niet bepalen:</font></b> <i>'{zin}'</i> </font>"
                                                 f"<font size=5><b><font color='#11ff00'>Oplossing:</font></b> Formateer de achtergrondkleur als '!(R, G, B).'. Correct voorbeeld: '!(122, 53, 36).' Getal mag 1 t/m 255 zijn. '</font>"
-                                                f"<font size=5><b><font color='#335fff'>De achtergrond van de presentatie is wit gebleven. </font>"
-                                            )
-                                            add_to_log(log_tekst)
-                                            kleur_error_woordgeving_weergeven = True
-                                    achtergrondkleur = RGBColor(255, 255, 255) # Geen goede kleur dan witte achtergrond
-
-                                if kleur_gekozen == False: # is errormessage al verschenen?
-                                    if kleur_gekozen_error_weergeven == False:  #is er al een kleur gekozen
-                                        log_tekst = (
-                                            f"<font size=5><b><font color='#ff0000'>Error: Achtergrondkleur al gegeven:</font></b> <i>'{zin}'</i> </font>"
-                                            f"<font size=5><b><font color='#11ff00'>Oplossing:</font></b> Er mag maximaal een achtergrondkleur worden opgegeven '</font>"
-                                            f"<font size=5><b><font color='#335fff'>De achtergrondkleur van de presentatie is de eerste gegeven kleur geworden. </font>"
-                                        )
-                                        add_to_log(log_tekst)
-                                        kleur_gekozen_error_weergeven = True
+                                                f"<font size=5><b><font color='#335fff'>De achtergrond van de presentatie is wit gebleven. </b></font>"
+                                    )
+                                    add_to_log(log_tekst)
 
                             elif zin.startswith(">"):
                                 zin = zin[1:]
@@ -232,6 +218,8 @@ while is_running:
                                 
                                 zin = zin.replace("\\", "")
                                 # Zet de placeholders
+                                zin = zin.replace("{Vervangende_Pijlrechts}", ">")
+                                zin = zin.replace("{Vervangende_Uitroepteken}", "!")
                                 zin = zin.replace("{Vervangende_Hashtag}", "#")
                                 zin = zin.replace("{Vervangende_Apenstaart}", "@")
                                 zin = zin.replace("{Vervangende_Punt}", ".")
@@ -251,10 +239,12 @@ while is_running:
                             title = slide.shapes.title
                             subtitle = slide.placeholders[1]
 
+                            #Achtergrondkleur
                             background = slide.background
                             fill = background.fill
                             fill.solid()
-                            #fill.fore_color.rgb = achtergrondkleur[0]
+                            #Achtergrondkleur van titelslide (opgegeven kleur anders wit)
+                            fill.fore_color.rgb = achtergrondkleur.get(0, RGBColor(255, 255, 255))
 
                             title.text = slidelijsten[0][0]
                             subtitle.text = "\n".join(slidelijsten[0][1:]).strip()
@@ -270,14 +260,13 @@ while is_running:
                                 slide_layout = prs.slide_layouts[1]  # De layout (van de library) voor "Titel en inhoud"
                                 slide = prs.slides.add_slide(slide_layout)
 
+                                #Achtergrondkleur
                                 background = slide.background
                                 fill = background.fill
                                 fill.solid()
-                                #for slidekleur in achtergrondkleur:
-                                #    print(slidekleur)
-                                #    print(achtergrondkleur)
-                                #    #fill.fore_color.rgb = slidekleur
-                                fill.fore_color.rgb = achtergrondkleur
+                                #Achtergrondkleur van titelslide (opgegeven kleur -> anders wit)
+                                fill.fore_color.rgb = achtergrondkleur.get(nummer, RGBColor(255, 255, 255))
+                                
 
                                 #defining variables
                                 title = slide.shapes.title
