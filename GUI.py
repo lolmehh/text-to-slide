@@ -199,6 +199,7 @@ while is_running:
                                         }
 
                                         afbeelding_gevonden = True
+
                                         break  # Afbeelding gevonden dus loopje stoppen
                                     
                                 if not afbeelding_gevonden:
@@ -283,10 +284,16 @@ while is_running:
                         # Maak de inhoudslides
                         def inhoudslides():
                             for nummer, zinnen in slidelijsten.items():
-
                                 if nummer == 0: #sla de gegevens van de titelslide over
                                     continue
 
+                                if len(zinnen) > 6:
+                                    log_tekst = (
+                                            f"<font size=5><b><font color='#ffb026'>Waarschuwing: Tekst past misschien niet op slide {nummer} </font></b></font>"
+                                            f"<font size=5><b><font color='#11ff00'>Oplossing:</font></b> Verspreid de tekst over meerdere slides. '</font>"
+                                            f"<font size=5><b><font color='#335fff'>De tekst is zoals ingesteld weergeven. </font>"
+                                        )
+                                    add_to_log(log_tekst)
                                 #maakt slide
                                 slide_layout = prs.slide_layouts[1]  # De layout (van de library) voor "Titel en inhoud"
                                 slide = prs.slides.add_slide(slide_layout)
