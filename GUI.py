@@ -134,7 +134,7 @@ while is_running:
                                 else:
                                     if not titel_error_weergeven:
                                         log_tekst = (
-                                            f"<font size=5><b><font color='#ff0000'>Error:</font></b> Te veel titelzinnen opgegeven: <i>'{zin}'</i><br>"
+                                            f"<font size=5><b><font color='#ff0000'>Error: kon de volgende zin niet in presentatie zetten</font></b><i>'{zin}'</i><br>"
                                             f"<font color='#11ff00'>Oplossing:</font> Maximaal twee titelzinnen (#) toegestaan.<br>"
                                             f"<font color='#335fff'>Deze zin is overgeslagen.</font>"
                                         )
