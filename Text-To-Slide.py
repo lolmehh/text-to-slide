@@ -18,6 +18,7 @@ achtergrondkleur = {}
 
 pygame.init()
 
+#GUI uiterlijk/uiterlijk van het programma
 pygame.display.set_caption('Text to slide')
 window_surface = pygame.display.set_mode((500, 500))
 
@@ -25,6 +26,7 @@ background = pygame.Surface((800, 600))
 background.fill(pygame.Color("#FFFFFF"))
 
 manager = pygame_gui.UIManager((500, 500))
+
 
 manager.preload_fonts([
     {'name': 'noto_sans', 'point_size': 14, 'style': 'bold', 'antialiased': '1'},
@@ -47,13 +49,16 @@ bestandnaamvak = pygame_gui.elements.UITextEntryLine(
     manager=manager
 )
 
+#de log waar alle errors in worden weergeven
 textbox = pygame_gui.elements.UITextBox(
     relative_rect=pygame.Rect((0, 75), (500, 300)),
     html_text="<font size=5>Upload een .txt bestand die je wil gebruiken om een .PPTX bestand te maken.</font>",
     manager=manager
 )
 
+#variabelen zodat errors niet te vaak worden weergeven als een fout vaak wordt gemaakt
 titel_error_weergeven, kleur_error_woordgeving_weergeven, kleur_gekozen_error_weergeven, kleur_gekozen = False, False, False, False
+#Tekst toevoegen aan tekstbox. bijvoorbeeld errors.
 def add_to_log(log_tekst):
     huidige_tekst = textbox.html_text
     nieuwe_tekst = huidige_tekst + f"<br>{log_tekst}"
@@ -69,7 +74,7 @@ titlebox = pygame_gui.elements.UITextBox(
     manager=manager
 )
 
-# Kleur voor importeerknop
+# Kleur voor importeerknop met animaties
 importeerknop.colours['normal_bg'] = pygame.Color("#000000")
 importeerknop.colours['hovered_bg'] = pygame.Color("#232323")
 importeerknop.colours['active_bg'] = pygame.Color("#000000")
@@ -78,6 +83,7 @@ importeerknop.rebuild()
 clock = pygame.time.Clock()
 is_running = True
 
+#GUI runnen
 while is_running:
     time_delta = clock.tick(60) / 1000.0
     for event in pygame.event.get():
@@ -89,7 +95,7 @@ while is_running:
             if event.ui_element == importeerknop   :
                 import tkinter as tk
                 from tkinter import filedialog
-
+                #kies bestand
                 root = tk.Tk()
                 root.withdraw()  
                 bestand = filedialog.askopenfilename(
@@ -98,12 +104,10 @@ while is_running:
                 )
 
                 if bestand:
+                    #bestand uitlezen en verwerken wat erin staat naar duidelijke informatie die pptx library kan gebruiken
                     def bestandlezen(bestand):
                         global titel_error_weergeven, kleur_error_woordgeving_weergeven, kleur_gekozen_error_weergeven, kleur_gekozen
                         afbeeldingen_per_slide = {}
-                        #achtergrondkleur[] = RGBColor(255, 255, 255)
-
-                        afbeeling_in_slide = True
 
                         with open(bestand, "r") as f:
                             text = f.read()
@@ -142,12 +146,12 @@ while is_running:
                                         titel_error_weergeven = True
 
                                 
-                            elif zin.startswith("@"):
+                            elif zin.startswith("@"): #Titel zin
                                 slidenummer = slidenummer + 1
                                 zin = zin[1:] #haalt @ weg uit presentatie
                                 slidelijsten[slidenummer] = [zin] 
 
-                            elif zin.startswith("!"):       
+                            elif zin.startswith("!"): #achtergrondkleur      
                                 zin = zin[1:]  # haalt ! weg
                                 # BRON: ChatGPT
                                 # PROMPT: Leg uit waarom achtergrondkleur = "RGBColor(53, 75, 32) niet werkt"
@@ -158,7 +162,7 @@ while is_running:
                                 # Dit splits de gegeven kleurencodes in de R, G en de B. Benoemt het variabel en controleert of de kleurcode niet foutief is. 
                                 # Als foutief achtergrondkleur = wit
                                 # haal uitroepteken weg en trim spaties
-                                try:
+                                try: #Haal RGB uit input
                                     rgb_text = zin.strip("!(). ")
                                     r, g, b = map(int, rgb_text.split(","))
                                     achtergrondkleur[slidenummer] = RGBColor(r, g, b)
@@ -171,7 +175,7 @@ while is_running:
                                     )
                                     add_to_log(log_tekst)
 
-                            elif zin.startswith(">"):
+                            elif zin.startswith(">"): #afbeelding invoegen
                                 zin = zin[1:]
                                 onderdelen = [deel.strip() for deel in zin.split(",")]
 
@@ -202,7 +206,7 @@ while is_running:
 
                                         break  # Afbeelding gevonden dus loopje stoppen
                                     
-                                if not afbeelding_gevonden:
+                                if not afbeelding_gevonden: #Error afbeelding niet vinden in bestanden
                                     log_tekst = (
                                             f"<font size=5><b><font color='#ff0000'>Error: Kon {bestandsnaam} niet vinden:</font></b> <i>'{zin}'</i> </font>"
                                             f"<font size=5><b><font color='#11ff00'>Oplossing:</font></b> Geef een correcte afbeelding op uit het afbeeldingmapje. '</font>"
@@ -281,7 +285,7 @@ while is_running:
                                     else:                                   #will just print the text if tehre is no closing bracket
                                         run.text = between_brackets
 
-                        # Maak de inhoudslides
+                        # Maakt de inhoudslides
                         def inhoudslides():
                             for nummer, zinnen in slidelijsten.items():
                                 if nummer == 0: #sla de gegevens van de titelslide over
@@ -366,7 +370,7 @@ while is_running:
                                     else:                                   #will just print the text if tehre is no closing bracket
                                         run.text = between_brackets
 
-                        def bestandopslaan():
+                        def bestandopslaan(): #slaat het bestand op
                             PPTXnaam = bestandnaamvak.get_text()
                             if PPTXnaam == "":
                                 PPTXnaam = "Text-To-Slide"
@@ -382,7 +386,7 @@ while is_running:
                                 bestandnaam = f"{PPTXnaam}({achtergetal}).pptx"
                             prs.save(PPTXbestand)
 
-                            log_tekst = (
+                            log_tekst = ( #in log print waar bestand is opgeslagen
                                 f"<font size=5><b><font color='#FFFFFF'>{bestandnaam}</font></b> opgeslagen op de volgende locatie: <b><font color='#FFFFFF'>{PPTXbestand}</font></b></font>"
                                 f"<font size=5><b>--------------------------------------------------------------------------</font></b>"
                             )
@@ -393,6 +397,7 @@ while is_running:
                         titelslideophalen()
                         inhoudslides()
                         bestandopslaan()
+                        #reset variabelen
                         titel_error_weergeven, kleur_error_woordgeving_weergeven, kleur_gekozen_error_weergeven, kleur_gekozen = False, False, False, False
                     
                     print("Gekozen bestand:", bestand)      
