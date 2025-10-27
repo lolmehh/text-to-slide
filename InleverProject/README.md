@@ -74,6 +74,11 @@ Trello
 - https://trello.com/b/RK1y2RSJ/text-to-slide-sytem
 Andere bronnen kunnen ook nog in de code staan
 
+ICEturbo = Maurits
+lolmehh = Justin
+Rest spreekt voor zich
+Ali zit er niet in
+
 -------------------------------------
 User Experience (UX) beoordelingscriteria
 -------------------------------------
